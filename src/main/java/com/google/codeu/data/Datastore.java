@@ -74,6 +74,19 @@ public class Datastore {
   }
 
   /**
+   * Creates a message object given an entity and a user.
+   */
+  public Message createMessage(Entity entity, String user)	{
+        String idString = entity.getKey().getName();
+        UUID id = UUID.fromString(idString);
+        String text = (String) entity.getProperty("text");
+        long timestamp = (long) entity.getProperty("timestamp");
+
+        return new Message(id, user, text, timestamp);
+
+  }
+
+  /**
    * Gets messages posted by a specific user.
    *
    * @return a list of messages posted by the user, or empty list if user has never posted a
@@ -90,12 +103,7 @@ public class Datastore {
 
     for (Entity entity : results.asIterable()) {
       try {
-        String idString = entity.getKey().getName();
-        UUID id = UUID.fromString(idString);
-        String text = (String) entity.getProperty("text");
-        long timestamp = (long) entity.getProperty("timestamp");
-
-        Message message = new Message(id, user, text, timestamp);
+	Message message = createMessage(entity, user);
         messages.add(message);
       } catch (Exception e) {
         System.err.println("Error reading message.");
@@ -104,6 +112,31 @@ public class Datastore {
       }
     }
 
+    return messages;
+  }
+
+  /**
+   * Gets messages posted by all users.
+   *
+   * @return a list of messages posted by every user, or an empty list if user has never posted
+   *     a message. List is sorted by time descending.
+   */
+  public List<Message> getAllMessages(){
+  List<Message> messages = new ArrayList<>();
+  Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+  PreparedQuery results = datastore.prepare(query);
+  
+  for (Entity entity : results.asIterable()) {
+    try {
+    	Message message = createMessage(entity, (String) entity.getProperty("user"));
+    	messages.add(message);
+    } catch (Exception e) {
+    	System.err.println("Error reading message.");
+    	System.err.println(entity.toString());
+    	e.printStackTrace();
+
+      }
+    }
     return messages;
   }
 
