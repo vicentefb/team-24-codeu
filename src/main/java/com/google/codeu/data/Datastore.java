@@ -74,17 +74,40 @@ public class Datastore {
   }
 
   /**
-   * Creates a message object given an entity and a user.
+   * Given an entity, creates its corresponding message object.
+   *
+   * @return the corresponding message object.
    */
-  public Message createMessage(Entity entity, String user)	{
+  private Message entityToMessage(Entity entity)  {
         String idString = entity.getKey().getName();
         UUID id = UUID.fromString(idString);
         String text = (String) entity.getProperty("text");
-        long timestamp = (long) entity.getProperty("timestamp");
+	String user = (String) entity.getProperty("user"); 
+	long timestamp = (long) entity.getProperty("timestamp");
 
         return new Message(id, user, text, timestamp);
 
   }
+
+  /**
+   * Given a prepared query, obtains the corresponding message list.
+   *
+   * @return the correpsonding message list.
+   */
+  private List<Message> getMessageList(PreparedQuery results)	{ 
+    List<Message> messages = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      try {
+      	Message message = entityToMessage(entity);
+      	messages.add(message);
+      } catch (Exception e) {
+      	System.err.println("Error reading message.");
+      	System.err.println(entity.toString());
+      	e.printStackTrace();
+        }
+    }
+    return messages;
+}
 
   /**
    * Gets messages posted by a specific user.
@@ -93,26 +116,13 @@ public class Datastore {
    *     message. List is sorted by time descending.
    */
   public List<Message> getMessages(String user) {
-    List<Message> messages = new ArrayList<>();
 
     Query query =
         new Query("Message")
             .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
-
-    for (Entity entity : results.asIterable()) {
-      try {
-	Message message = createMessage(entity, user);
-        messages.add(message);
-      } catch (Exception e) {
-        System.err.println("Error reading message.");
-        System.err.println(entity.toString());
-        e.printStackTrace();
-      }
-    }
-
-    return messages;
+    return getMessageList(results);
   }
 
   /**
@@ -126,18 +136,7 @@ public class Datastore {
   Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
   PreparedQuery results = datastore.prepare(query);
   
-  for (Entity entity : results.asIterable()) {
-    try {
-    	Message message = createMessage(entity, (String) entity.getProperty("user"));
-    	messages.add(message);
-    } catch (Exception e) {
-    	System.err.println("Error reading message.");
-    	System.err.println(entity.toString());
-    	e.printStackTrace();
-
-      }
-    }
-    return messages;
+  return getMessageList(results);
   }
 
   public Set<String> getUsers(){
