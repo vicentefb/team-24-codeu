@@ -79,15 +79,15 @@ public class Datastore {
    * @return the corresponding message object.
    */
   private Message entityToMessage(Entity entity)  {
-        String idString = entity.getKey().getName();
-        UUID id = UUID.fromString(idString);
-        String text = (String) entity.getProperty("text");
-	String user = (String) entity.getProperty("user"); 
-	long timestamp = (long) entity.getProperty("timestamp");
-
-        return new Message(id, user, text, timestamp);
-
-  }
+    String idString = entity.getKey().getName();
+    UUID id = UUID.fromString(idString);
+    String text = (String) entity.getProperty("text");
+    String user = (String) entity.getProperty("user"); 
+    long timestamp = (long) entity.getProperty("timestamp");
+    
+    return new Message(id, user, text, timestamp);
+    
+}
 
   /**
    * Given a prepared query, obtains the corresponding message list.
