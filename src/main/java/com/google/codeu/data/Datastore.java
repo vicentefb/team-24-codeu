@@ -75,37 +75,69 @@ public class Datastore {
   }
 
   /**
+   * Given an entity, creates its corresponding message object.
+   *
+   * @return the corresponding message object.
+   */
+  private Message entityToMessage(Entity entity)  {
+    String idString = entity.getKey().getName();
+    UUID id = UUID.fromString(idString);
+    String text = (String) entity.getProperty("text");
+    String user = (String) entity.getProperty("user"); 
+    long timestamp = (long) entity.getProperty("timestamp");
+    
+    return new Message(id, user, text, timestamp);
+    
+}
+
+  /**
+   * Given a prepared query, obtains the corresponding message list.
+   *
+   * @return the correpsonding message list.
+   */
+  private List<Message> getMessageList(PreparedQuery results)	{ 
+    List<Message> messages = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      try {
+      	Message message = entityToMessage(entity);
+      	messages.add(message);
+      } catch (Exception e) {
+      	System.err.println("Error reading message.");
+      	System.err.println(entity.toString());
+      	e.printStackTrace();
+        }
+    }
+    return messages;
+}
+
+  /**
    * Gets messages posted by a specific user.
    *
    * @return a list of messages posted by the user, or empty list if user has never posted a
    *     message. List is sorted by time descending.
    */
   public List<Message> getMessages(String user) {
-    List<Message> messages = new ArrayList<>();
 
     Query query =
         new Query("Message")
             .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
             .addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
+    return getMessageList(results);
+  }
 
-    for (Entity entity : results.asIterable()) {
-      try {
-        String idString = entity.getKey().getName();
-        UUID id = UUID.fromString(idString);
-        String text = (String) entity.getProperty("text");
-        long timestamp = (long) entity.getProperty("timestamp");
-
-        Message message = new Message(id, user, text, timestamp);
-        messages.add(message);
-      } catch (Exception e) {
-        System.err.println("Error reading message.");
-        System.err.println(entity.toString());
-        e.printStackTrace();
-      }
-    }
-
-    return messages;
+  /**
+   * Gets messages posted by all users.
+   *
+   * @return a list of messages posted by every user, or an empty list if user has never posted
+   *     a message. List is sorted by time descending.
+   */
+  public List<Message> getAllMessages(){
+  List<Message> messages = new ArrayList<>();
+  Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+  PreparedQuery results = datastore.prepare(query);
+  
+  return getMessageList(results);
   }
 
   /** Returns the total number of messages for all users. */
