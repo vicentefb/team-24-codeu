@@ -1,8 +1,15 @@
 
-
 google.charts.load('current', { packages: ['corechart'] });
-google.charts.setOnLoadCallback(drawDonutChart);
 
+//loads the charts that will be created
+google.charts.setOnLoadCallback(drawDonutChart);
+google.charts.setOnLoadCallback(drawBarGraph);
+
+/*
+ * 
+ * the function that draws the donut chart
+ * 
+ */ 
 function drawDonutChart() {
     //instance of DataTable for the chart
     var weekly_donut_data = new google.visualization.arrayToDataTable([
@@ -35,10 +42,7 @@ function drawDonutChart() {
 
     //dictionary of customization for the chart
     var chart_options = {
-        title: 'My Weekly Commute Data',
-        width: 800,
-        height: 800,
-        pieHole: 0.4,
+        pieHole: 0.3,
         colors: slices_color,
     };
 
@@ -47,4 +51,43 @@ function drawDonutChart() {
 
     //draw the chart
     chart.draw(weekly_donut_data, chart_options);
+}
+/*
+ * 
+ * the function that draws the bar graph
+ * 
+ */ 
+function drawBarGraph() {
+    var weekly_bar_data = google.visualization.arrayToDataTable([
+        ['Source', 'Kilograms of CO2', { role: 'style' }],
+        ['My Emissions', 45, '#3366cc'], //emissions will be calculated by multiplying miles * .404
+        ['Average Emissions', 88, '#3366cc'], //hardcoded data, will not change
+    ]);
+
+    var graph_options = {
+  
+    };
+
+    var graph = new google.visualization.ColumnChart(document.getElementById('weekly_bar_graph'));
+
+    graph.draw(weekly_bar_data, graph_options);
+}
+/*
+ * 
+ * the function that determines the size of the stats circles
+ * 
+ */
+function calcCircleSizes() {
+    var sustainable_miles_week = 15; //FIXME: replace with actual data
+    var total_miles_week = 35; //FIXME: replace with actual data
+    var miles_circle_size = (weekly_miles / total_miles_week) * 100;
+
+    document.getElementById('miles_circle').style.height = miles_circle_size;
+    document.getElementById('miles_circle').style.width = miles_circle_size;
+    document.getElementById('miles_circle').textContent(' miles');
+
+    //miles_circle.setAttribute("height", miles_circle_size);
+    //miles_circle.setAttribute("width", miles_circle_size);
+    //miles_circle.textContent(sustainable_miles_week + ' miles');
+    //miles_circle.textContent(' miles');
 }

@@ -1,0 +1,18 @@
+﻿
+
+.chart {
+    width: 100%;
+    min-height: 450px;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.circle {
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    background: #000
+}
