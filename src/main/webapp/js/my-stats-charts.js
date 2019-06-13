@@ -12,7 +12,7 @@ google.charts.setOnLoadCallback(drawBarGraph);
  */ 
 function drawDonutChart() {
     //instance of DataTable for the chart
-    var weekly_donut_data = new google.visualization.arrayToDataTable([
+    var weekly_donut_data = google.visualization.arrayToDataTable([
         ['Commute Method', 'Hours per Week'],
         ['Bike', 2.75],
         ['Scooter', 0.5],
@@ -80,7 +80,9 @@ function drawBarGraph() {
 function calcCircleSizes() {
     var sustainable_miles_week = 15; //FIXME: replace with actual data
     var total_miles_week = 35; //FIXME: replace with actual data
-    var miles_circle_size = (weekly_miles / total_miles_week) * 100;
+    var miles_circle_size = (sustainable_miles_week / total_miles_week) * 100;
+
+    console.log("message test");
 
     document.getElementById('miles_circle').style.height = miles_circle_size;
     document.getElementById('miles_circle').style.width = miles_circle_size;
