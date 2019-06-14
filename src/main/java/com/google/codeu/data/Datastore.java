@@ -64,6 +64,9 @@ public class Datastore {
     return user;
   }
 
+  /**
+   * @return all of the users currently stored.
+   */
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();
     Query query = new Query("Message");
