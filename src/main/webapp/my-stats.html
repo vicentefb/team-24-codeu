@@ -2,9 +2,6 @@
 <html>
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', { packages: ['corechart'] });
-    </script>
     <script src="/js/my-stats-charts.js"></script>
 
     <link rel="stylesheet" href="/css/my-stats.css">
@@ -13,26 +10,31 @@
     <title>My Commute Stats</title>
 </head>
 <body>
-    <h1>My Weekly Commute Stats</h1>
+    <h1 class="text-center">My Weekly Commute Stats</h1>
     <!--row of circles for quick fun fact stats-->
     <div class="row">
         <div class="col-md-3">
-            <div id="miles_circle" class="circle"></div>
+            <div id="weekly_miles_chart" class="chart_type_1"></div>
+            <p class="text-center">Miles Count</p>
+        </div>
+        <div class="col-md-3">
+            <div id="weekly_hours_chart" class="chart_type_1"></div>
+        </div>
+        <div class="col-md-3">
+            <div id="weekly_fav_mode_chart" class="chart_type_1"></div>
+        </div>
+        <div class="col-md-3">
+            <div id="weekly_won_chals_chart" class="chart_type_1"></div>
         </div>
     </div>
     <!--row of graphs/charts-->
     <div class="row">
         <div class="col-md-6">
-            <div id="weekly_donut_chart" class="chart"></div>
+            <div id="weekly_donut_chart" class="chart_type_2"></div>
         </div>
         <div class="col-md-6">
-            <div id="weekly_bar_graph" class="chart"></div>
+            <div id="weekly_bar_graph" class="chart_type_2"></div>
         </div>
     </div>
-    <script>
-        drawDonutChart();
-        drawBarGraph();
-        calcCircleSizes();
-    </script>
 </body>
 </html>

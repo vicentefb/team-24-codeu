@@ -1,6 +1,10 @@
 ﻿
 
-.chart {
+.chart_type_1 {
+    width: 100%;
+    min-height: 250px;
+}
+.chart_type_2 {
     width: 100%;
     min-height: 450px;
 }
