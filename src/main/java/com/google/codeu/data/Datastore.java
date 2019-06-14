@@ -64,6 +64,18 @@ public class Datastore {
     return user;
   }
 
+  public Set<String> getUsers(){
+    Set<String> users = new HashSet<>();
+    Query query = new Query("Message");
+    PreparedQuery results = datastore.prepare(query);
+
+    for(Entity entity : results.asIterable()) {
+      users.add((String) entity.getProperty("user"));
+    }
+
+    return users;
+  }
+
   /** Stores the Message in Datastore. */
   public void storeMessage(Message message) {
     Entity messageEntity = new Entity("Message", message.getId().toString());
@@ -149,16 +161,5 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-  public Set<String> getUsers(){
-    Set<String> users = new HashSet<>();
-    Query query = new Query("Message");
-    PreparedQuery results = datastore.prepare(query);
-
-    for(Entity entity : results.asIterable()) {
-      users.add((String) entity.getProperty("user"));
-    }
-
-    return users;
-  }
 }
 
