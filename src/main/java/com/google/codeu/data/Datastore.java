@@ -27,8 +27,6 @@ import com.google.appengine.api.datastore.FetchOptions;
 
 import java.util.*;
 
-/** Provides access to the data stored in Datastore. */
-public class Datastore {
 
   private DatastoreService datastore;
 
@@ -102,7 +100,6 @@ public class Datastore {
     long timestamp = (long) entity.getProperty("timestamp");
     
     return new Message(id, user, text, timestamp);
-    
 }
 
   /**
@@ -148,15 +145,14 @@ public class Datastore {
    *     a message. List is sorted by time descending.
    */
   public List<Message> getAllMessages(){
-  List<Message> messages = new ArrayList<>();
-  Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
-  PreparedQuery results = datastore.prepare(query);
-  
-  return getMessageList(results);
+    List<Message> messages = new ArrayList<>();
+    Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    
+    return getMessageList(results);
   }
 
   /** Returns the total number of messages for all users. */
-
   public int getTotalMessageCount(){
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
@@ -164,5 +160,57 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
-}
+  /**
+   * Given an entity, create and @return its corresponding route object.
+   */
+  private Route entityToRoute(Entity entity)  {
+    String idString = entity.getKey().getName();
+    UUID id = UUID.fromString(idString);
+    List<String> addressList = (List<String>) entity.getProperty("addressList");
+    float distanceTravelled = (float) entity.getProperty("distanceTravelled");
+    float departureTime = (float) entity.getProperty("departureTime");
+    float timeSpent = (float) entity.getProperty("timeSpent");
+    
+    return new Route(addressList, distanceTravelled, departureTime, timeSpent);
+  }
 
+  /**
+   * Given a prepared query, obtains the corresponding route list.
+   *
+   * @return the correpsonding route list.
+   */
+  private List<Route> getRouteList(PreparedQuery results)  {
+	  List<Route> routes = new ArrayList<>();
+	  for (Entity entity : results.asIterable())  {
+		  try  {
+			  Route route = enttiyToRoute(entity);
+			  routes.add(route);
+		  } catch (Exception e)  {
+			  System.err.println("Error reading route.");
+			  System.err.println(entity.toString());
+			  e.printStackTrace();
+		  }
+	  }
+	  return routes;
+  }
+
+  /** 
+   * @return all of the routes currently in the datastore. List is sorted by departure time, descending.
+   */
+  public List<Route> getAllRoutes()	{
+    Query query = new Query("Route").addSort("departureTime", SortDirection.DESCENDING);
+	PreparedQuery results = datastore.prepare(query);
+	return getRouteList(routes);
+  }
+
+  /**
+   * Gets all routes used by a specific user.
+   */
+  public List<Route> getRoutes(String user)	{
+	  Query query = 
+		  new Query("Route")
+		    .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+			.addSort("departureTime", SortDirection.DESCENDING);
+	  PreparedQuery results = datastore.prepare(query);
+	  return getRouteList(results);
+}
