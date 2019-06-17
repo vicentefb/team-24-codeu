@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/my-stats-charts.js"></script>
+
+    <!--the following link allow Bootstrap to function-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--stylesheet for this page-->
+    <link rel="stylesheet" href="/css/my-stats.css">
+
+    <title>My Commute Stats</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="header_1 text-center">My Weekly Commute Stats</p>
+            <br />
+        </div>
+    </div>
+    <!--row of circles for quick stats-->
+    <div class="row">
+        <div class="col-md-12">
+            <p class="header_2 text-center">Crunch the Numbers!</p>
+        </div>
+    </div>
+    <div class="row extra_bottom_margin">
+        <div class="col-md-3">
+            <div id="weekly_miles_chart" class="chart_type_1"></div>
+            <p class="text-center">Miles</p>
+        </div>
+        <div class="col-md-3">
+            <div id="weekly_hours_chart" class="chart_type_1"></div>
+            <p class="text-center">Hours</p>
+        </div>
+        <div class="col-md-3">
+            <div id="weekly_fav_mode_chart" class="chart_type_1"></div>
+            <p class="text-center">Favorite Mode</p>
+        </div>
+        <div class="col-md-3">
+            <div id="weekly_chals_won_chart" class="chart_type_1"></div>
+            <p class="text-center">Challenges Won</p>
+        </div>
+        <br />
+    </div>
+    <!--row of graphs/charts-->
+    <div class="row">
+        <div class="col-md-12">
+            <p class="header_2 text-center">My Progress Visualized</p>
+        </div>
+    </div>
+    <div class="row extra_bottom_margin">
+        <div class="col-md-6">
+            <div id="weekly_donut_chart" class="chart_type_2"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="weekly_bar_graph" class="chart_type_2"></div>
+        </div>
+    </div>
+</body>
+</html>
