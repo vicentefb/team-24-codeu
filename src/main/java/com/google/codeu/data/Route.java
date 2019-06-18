@@ -6,7 +6,6 @@ import java.util.List;
  * All timestamps are unix epoch time.
  */
 public class Route	{
-	private String userEmail;
 	private List<String> addressList;
 	private float distanceTravelled;
 	private float departureTime;
