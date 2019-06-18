@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hello Google Maps</title>
+  <title>UFO Sightings</title>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDie7L-I-7ytTG6AiByhJefoF5Lp1B3YHs"></script>
   <script>
-    function createMap(){
-      const map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 37.422, lng: -122.084},
-        zoom: 16
+    function createUfoSightingsMap(){
+      fetch('/ufo-data').then(function(response) {
+        return response.json();
+      }).then((ufoSightings) => {
+
+        const map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 35.78613674, lng: -119.4491591},
+          zoom:7
+        });
+
+        ufoSightings.forEach((ufoSighting) => {
+          new google.maps.Marker({
+            position: {lat: ufoSighting.lat, lng: ufoSighting.lng},
+            map: map
+          });
+        });
       });
     }
   </script>
   <style>
-    #map {
+    #map{
       width: 500px;
       height: 500px;
-      border: thin solid black;
     }
   </style>
 </head>
-<body onload="createMap();">
-  <h1>Hello Google Maps</h1>
-  <div id="map"></div>
-  <p>This page shows a Google Map!</p>
+<body onload="createUfoSightingsMap();">
+<h1>UFO Sightings</h1>
+<div id="map"></div>
 </body>
 </html>
