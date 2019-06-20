@@ -35,18 +35,12 @@ public class EmissionsServlet extends HttpServlet {
         Gson hypothetical_gson = new Gson();
         String hypothetical_json = hypothetical_gson.toJson(hypotheticalEmissions);
 
-        //JsonObject actual = new JsonObject();
-        //JsonObject hypothetical = new JsonObject();
-
-        //actual.addProperty("actual emissions", actualEmissions);
-        //hypothetical.addProperty("hypothetical emissions", hypotheticalEmissions);
-        ArrayList<String> emissions_data = new ArrayList();
+        //list of all the data needed for the chart
+        ArrayList<String> emissions_data = new ArrayList<String>();
         emissions_data.add(actual_json);
         emissions_data.add(hypothetical_json);
 
+        //writes the list to the response
         response.getWriter().println(emissions_data);
-        //FIXME: delete later, used for testing
-        //response.getOutputStream().println(actual.toString());
-        //response.getOutputStream().println(hypothetical.toString());
     }
 }
