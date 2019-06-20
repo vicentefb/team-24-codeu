@@ -45,7 +45,7 @@ public class Datastore {
   }
 
   public double getTotalUnsustainableMiles() {
-    return 18.1;
+    return 18.1; //FIXME: change to actual data
   }
 
   /** Stores the User in Datastore. */

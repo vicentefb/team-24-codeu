@@ -62,35 +62,28 @@ function drawDonutChart() {
  * 
  */ 
 function drawBarGraph() {
-
     fetch("/emissions")
     .then((response) => {
-        Console.Log("response: " + response);
-        Console.Log("response.json() " + response.json());
         return response.json();
     })
     .then((emissionsJson) => {
         var weekly_emissions_data = new google.visualization.DataTable();
-        //define columns for the DataTable instance
         weekly_emissions_data.addColumn('string', 'Source');
         weekly_emissions_data.addColumn('number', 'Kilograms of CO2');
         
-        //FIXME: want to add rows with the correct data from the servlet
-        weekly_emissions_data.addRow('My Emissions', /*actualEmissions from servlet*/);
-        weekly_emissions_data.addRow('Average Emissions', /*hypotheticalEmissions from servlet*/);
-    })
-    // var weekly_bar_data = google.visualization.arrayToDataTable([
-    //     ['Source', 'Kilograms of CO2', { role: 'style' }],
-    //     ['My Emissions', 45, '#3366cc'], //emissions will be calculated by multiplying miles * .404
-    //     ['Average Emissions', 88, '#3366cc'], //hardcoded data, will not change
-    // ]);
+        weekly_emissions_data.addRows([
+            ['My Emissions', emissionsJson[0]],
+            ['Average Emissions', emissionsJson[1]]
+        ]);
+
+        var graph = new google.visualization.ColumnChart(document.getElementById('weekly_bar_graph'));
+        graph.draw(weekly_emissions_data, graph_options);
+
+    });
 
     var graph_options = {
   
     };
-
-    var graph = new google.visualization.ColumnChart(document.getElementById('weekly_bar_graph'));
-    graph.draw(weekly_emissions_data, graph_options);
 }
 
 /*
