@@ -36,6 +36,18 @@ public class Datastore {
     datastore = DatastoreServiceFactory.getDatastoreService();
   }
 
+  public double getTotalMiles() {
+    return 50.5; //FIXME: change to actual data
+  }
+
+  public double getTotalSustainableMiles() {
+    return 32.4; //FIXME: change to actual data
+  }
+
+  public double getTotalUnsustainableMiles() {
+    return 18.1;
+  }
+
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
