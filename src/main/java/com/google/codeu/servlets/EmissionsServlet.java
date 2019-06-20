@@ -34,6 +34,7 @@ public class EmissionsServlet extends HttpServlet {
         actual.addProperty("actual emissions", actualEmissions);
         hypothetical.addProperty("hypothetical emissions", hypotheticalEmissions);
 
+        //FIXME: delete later, used for testing
         response.getOutputStream().println(actual.toString());
         response.getOutputStream().println(hypothetical.toString());
     }
