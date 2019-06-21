@@ -27,7 +27,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 
 import java.util.*;
 
-
+public class Datastore {
   private DatastoreService datastore;
 
   public Datastore() {
@@ -183,7 +183,7 @@ import java.util.*;
 	  List<Route> routes = new ArrayList<>();
 	  for (Entity entity : results.asIterable())  {
 		  try  {
-			  Route route = enttiyToRoute(entity);
+			  Route route = entityToRoute(entity);
 			  routes.add(route);
 		  } catch (Exception e)  {
 			  System.err.println("Error reading route.");
@@ -200,7 +200,7 @@ import java.util.*;
   public List<Route> getAllRoutes()	{
     Query query = new Query("Route").addSort("departureTime", SortDirection.DESCENDING);
 	PreparedQuery results = datastore.prepare(query);
-	return getRouteList(routes);
+	return getRouteList(results);
   }
 
   /**
