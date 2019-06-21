@@ -2,13 +2,12 @@ package com.google.codeu.servlets;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
-import com.google.gson.Gson;
-import java.util.ArrayList;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.codeu.data.Datastore;
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
+import java.util.ArrayList;
 
 @WebServlet("/emissions")
 
@@ -24,14 +23,18 @@ public class EmissionsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-   
+
+        //FIXME: replace the following variables with real data from datastore
+        double totalMiles = 50.5;
+        double totalUnsustainableMiles = 18.1;
+        
         //the user's total unsustainable miles is multiplied by .404 to get amount of carbon in kg
-        double actualEmissions = datastore.getTotalUnsustainableMiles() * .404;
+        double actualEmissions = totalUnsustainableMiles * .404;
         Gson actual_gson = new Gson();
         String actual_json = actual_gson.toJson(actualEmissions);
 
         //the user's total miles is multiplied by .404 to get the hypothetical amount of carbon in kg
-        double hypotheticalEmissions = datastore.getTotalMiles() * .404;
+        double hypotheticalEmissions = totalMiles * .404;
         Gson hypothetical_gson = new Gson();
         String hypothetical_json = hypothetical_gson.toJson(hypotheticalEmissions);
 

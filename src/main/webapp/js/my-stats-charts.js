@@ -15,46 +15,48 @@ google.charts.setOnLoadCallback(drawChalsWonDonut);
  * 
  */ 
 function drawDonutChart() {
-    //instance of DataTable for the chart
-    var weekly_donut_data = google.visualization.arrayToDataTable([
-        ['Commute Method', 'Hours per Week'],
-        ['Bike', 2.75],
-        ['Scooter', 0.5],
-        ['Walk', 2],
-        ['Rollerblade', 0.75],
-        ['Car (Single Rider)', 1.25],
-        ['Car (Carpool)', 2]
-    ]);
+    fetch("/modesOfTransp")
+    .then((response) => {
+        return response.json();
+    })
+    .then((modesJson) => {
+        var weekly_donut_data = google.visualization.arrayToDataTable([
+            ['Commute Method', 'Miles per Week'],
+            [modesJson[0].name, modesJson[0].miles],
+            [modesJson[1].name, modesJson[1].miles],
+            [modesJson[2].name, modesJson[2].miles],
+            [modesJson[3].name, modesJson[3].miles],
+            [modesJson[4].name, modesJson[4].miles],
+            [modesJson[5].name, modesJson[5].miles]
+        ]);
 
-    //sorts the data from fewest hours per week to most
-    weekly_donut_data.sort([{ column: 1 }]);
+        //sorts the data from fewest hours per week to most
+        weekly_donut_data.sort([{ column: 1 }]);
 
-    //array of green colors from light to dark
-    var green_shades = ['#aeeaae', '#85e085', '#5cd65c', '#2eb82e', '#248f24'];
+        //array of green colors from light to dark
+        var green_shades = ['#aeeaae', '#85e085', '#5cd65c', '#2eb82e', '#248f24'];
 
-    //iterates through the data and assigns a color to the chart based on hours value
-    var slices_color = [];
-    var green_index = 0;
-    for (var i = 0; i < weekly_donut_data.getNumberOfRows(); i++) {
-        if (weekly_donut_data.getValue(i, 0) == 'Car (Single Rider)') {
-            slices_color.push('#ff3333');
-        } else {
-            slices_color.push(green_shades[green_index]);
-            green_index++;
+        //iterates through the data and assigns a color to the chart based on hours value
+        var slices_color = [];
+        var green_index = 0;
+        for (var i = 0; i < weekly_donut_data.getNumberOfRows(); i++) {
+            if (weekly_donut_data.getValue(i, 0) == 'Car (Single Rider)') {
+                slices_color.push('#ff3333');
+            } else {
+                slices_color.push(green_shades[green_index]);
+               green_index++;
+          }
         }
-    }
 
-    //dictionary of customization for the chart
-    var chart_options = {
-        pieHole: 0.3,
-        colors: slices_color,
-    };
-
-    //create an instance of the type of chart
-    var chart = new google.visualization.PieChart(document.getElementById('weekly_donut_chart'));
-
-    //draw the chart
-    chart.draw(weekly_donut_data, chart_options);
+        //dictionary of customization for the chart
+        var chart_options = {
+            pieHole: 0.3,
+            colors: slices_color,
+        };
+        
+        var chart = new google.visualization.PieChart(document.getElementById('weekly_donut_chart'));
+        chart.draw(weekly_donut_data, chart_options);
+    });
 }
 /*
  * 
@@ -67,23 +69,40 @@ function drawBarGraph() {
         return response.json();
     })
     .then((emissionsJson) => {
-        var weekly_emissions_data = new google.visualization.DataTable();
-        weekly_emissions_data.addColumn('string', 'Source');
-        weekly_emissions_data.addColumn('number', 'Kilograms of CO2');
+        var my_emiss_color;
         
-        weekly_emissions_data.addRows([
-            ['My Emissions', emissionsJson[0]],
-            ['Average Emissions', emissionsJson[1]]
+        //if my emissions is greater than the average, my bar is red and average is red,
+        //otherwise, mine is green and average is red
+        if(emissionsJson[0] < emissionsJson[1]) {
+            my_emiss_color = '#85e085';
+        } else {
+            my_emiss_color = '#ff3333';
+        }
+
+        var weekly_emissions_data = google.visualization.arrayToDataTable([
+            ['Source', 'Kilograms of CO2', {role: 'style'}],
+            ['My Emissions', emissionsJson[0], my_emiss_color],
+            ['Average Emissions', emissionsJson[1], '#ff3333']
         ]);
+
+        var graph_options = {
+            vAxis: {
+                title: 'Kilograms of CO2',
+                titleFontSize: 16,
+            },
+            hAxis: {
+                title: 'Source of Emissions',
+                titleFontSize: 16,
+            },
+            legend: {
+                position: 'none'
+            }
+        };
 
         var graph = new google.visualization.ColumnChart(document.getElementById('weekly_bar_graph'));
         graph.draw(weekly_emissions_data, graph_options);
 
     });
-
-    var graph_options = {
-  
-    };
 }
 
 /*
@@ -161,9 +180,6 @@ function drawHoursCounterDonut() {
         legend: {
             position: 'none'
         },
-        tooltip: {
-            1: { trigger: 'none' }, //FIXME: how to only allow the green section to be hoverable?
-        }
     };
 
     //create an instance of the type of chart (bar here)
