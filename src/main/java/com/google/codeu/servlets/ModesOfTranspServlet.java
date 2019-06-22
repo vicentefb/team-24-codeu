@@ -9,24 +9,42 @@ import com.google.codeu.data.Datastore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 
+/*
+ * The purpose of this servlet is to retrieve the data needed for the modes of
+ * transportation donut chart used on my-stats.html
+ */
 @WebServlet("/modesOfTransp")
 
 public class ModesOfTranspServlet extends HttpServlet {
-    
-    private Datastore datastore;
 
     @Override
     public void init() {
-        datastore = new Datastore();
+        //datastore = new Datastore(); //implement when using Datastore
     }
 
-    public class TranspMode {
-        String name = "";
-        double miles = 0.0;
+    private class TranspMode {
+        private String name = "";
+        private double miles = 0.0;
 
-        public TranspMode(String name, double miles) {
+        private TranspMode(String name, double miles) {
             this.name = name;
             this.miles = miles;    
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getMiles() {
+            return miles;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setMiles(double miles) {
+            this.miles = miles;
         }
     }
 

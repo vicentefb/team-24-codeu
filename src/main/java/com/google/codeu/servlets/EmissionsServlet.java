@@ -9,15 +9,17 @@ import com.google.codeu.data.Datastore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 
+/*
+ * The purpose of this servlet is to retrieve the data needed for the emissions bar graph
+ * on my-stats.html and calculate the amount of CO2 in terms of kilograms
+ */
 @WebServlet("/emissions")
 
 public class EmissionsServlet extends HttpServlet {
-    
-    private Datastore datastore;
 
     @Override
     public void init() {
-        datastore = new Datastore();
+        //datastore = new Datastore(); //implement when using Datastore
     }
 
     @Override

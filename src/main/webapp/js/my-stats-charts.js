@@ -10,9 +10,7 @@ google.charts.setOnLoadCallback(drawFavModeDonut);
 google.charts.setOnLoadCallback(drawChalsWonDonut);
 
 /*
- * 
  * the function that draws the donut chart
- * 
  */ 
 function drawDonutChart() {
     fetch("/modesOfTransp")
@@ -20,6 +18,7 @@ function drawDonutChart() {
         return response.json();
     })
     .then((modesJson) => {
+
         var weekly_donut_data = google.visualization.arrayToDataTable([
             ['Commute Method', 'Miles per Week'],
             [modesJson[0].name, modesJson[0].miles],
@@ -45,7 +44,7 @@ function drawDonutChart() {
             } else {
                 slices_color.push(green_shades[green_index]);
                green_index++;
-          }
+            }
         }
 
         //dictionary of customization for the chart
@@ -59,9 +58,7 @@ function drawDonutChart() {
     });
 }
 /*
- * 
- * the function that draws the bar graph
- * 
+ * the function that draws the emissions bar graph
  */ 
 function drawBarGraph() {
     fetch("/emissions")
@@ -85,14 +82,15 @@ function drawBarGraph() {
             ['Average Emissions', emissionsJson[1], '#ff3333']
         ]);
 
+        var emissions_axis_size = 16;
         var graph_options = {
             vAxis: {
                 title: 'Kilograms of CO2',
-                titleFontSize: 16,
+                titleFontSize: emissions_axis_size,
             },
             hAxis: {
                 title: 'Source of Emissions',
-                titleFontSize: 16,
+                titleFontSize: emissions_axis_size,
             },
             legend: {
                 position: 'none'
@@ -106,9 +104,7 @@ function drawBarGraph() {
 }
 
 /*
- * 
  * the function that draws the miles counter donut chart
- * 
  */
 function drawMilesCounterDonut() {
     var totalSustainableMiles = 8.5; //FIXME: replace with actual data
@@ -148,9 +144,7 @@ function drawMilesCounterDonut() {
 }
 
 /*
- * 
  * the function that draws the hours counter donut chart
- * 
  */
 function drawHoursCounterDonut() {
     var totalSustainableHours = 2; //FIXME: replace with actual data
@@ -190,9 +184,7 @@ function drawHoursCounterDonut() {
 }
 
 /*
- * 
  * the function that draws the favorite mode donut chart
- * 
  */
 function drawFavModeDonut() {
     var favoriteMode = 'Bike'; //FIXME: replace with actual data
@@ -225,9 +217,7 @@ function drawFavModeDonut() {
 }
 
 /*
- * 
  * the function that draws the challenges won donut chart
- * 
  */
 function drawChalsWonDonut() {
     var totalChalsWon = 2; //FIXME: replace with actual data
