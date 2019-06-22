@@ -51,12 +51,21 @@ function drawDonutChart() {
         var chart_options = {
             pieHole: 0.3,
             colors: slices_color,
+            title: 'How I Traveled This Week (Miles)',
+            titleTextStyle: { 
+                fontSize: 16,
+                bold: false,
+                italic: true 
+            }
         };
         
+        //create an instance of the type of chart
         var chart = new google.visualization.PieChart(document.getElementById('weekly_donut_chart'));
+        //draw the chart
         chart.draw(weekly_donut_data, chart_options);
     });
 }
+
 /*
  * the function that draws the emissions bar graph
  */ 
@@ -68,10 +77,11 @@ function drawBarGraph() {
     .then((emissionsJson) => {
         var my_emiss_color;
         
-        //if my emissions is greater than the average, my bar is red and average is red,
-        //otherwise, mine is green and average is red
+        /* if my emissions is greater than the average, my bar is red and average is red,
+         * otherwise, mine is green and average is red
+         */
         if(emissionsJson[0] < emissionsJson[1]) {
-            my_emiss_color = '#85e085';
+            my_emiss_color = '#5cd65c';
         } else {
             my_emiss_color = '#ff3333';
         }
@@ -83,6 +93,8 @@ function drawBarGraph() {
         ]);
 
         var emissions_axis_size = 16;
+
+        //dictionary of customization for the chart
         var graph_options = {
             vAxis: {
                 title: 'Kilograms of CO2',
@@ -97,9 +109,10 @@ function drawBarGraph() {
             }
         };
 
+        //create an instance of the type of chart
         var graph = new google.visualization.ColumnChart(document.getElementById('weekly_bar_graph'));
+        //draw the chart
         graph.draw(weekly_emissions_data, graph_options);
-
     });
 }
 
@@ -226,7 +239,6 @@ function drawFavModeDonut() {
     
         //create an instance of the type of chart
         var fav_mode_chart = new google.visualization.PieChart(document.getElementById('weekly_fav_mode_chart'));
-    
         //draw the chart
         fav_mode_chart.draw(weekly_fav_mode_data, fav_mode_circle_options);
     });
@@ -275,9 +287,7 @@ function drawChalsWonDonut() {
     
         //create an instance of the type of chart (bar here)
         var chals_won_chart = new google.visualization.PieChart(document.getElementById('weekly_chals_won_chart'));
-    
         //draw the chart
         chals_won_chart.draw(weekly_chals_won_data, chals_won_circle_options);
-
     })
 }

@@ -22,6 +22,7 @@ public class MiniStatsServlet extends HttpServlet {
         //datastore = new Datastore(); //implement when using Datastore
     }
     
+    //holds info for the miles donut chart
     private class MilesChartData {
         private double totalMiles;
         private double totalMilesGoal;
@@ -32,6 +33,7 @@ public class MiniStatsServlet extends HttpServlet {
         }
     }
 
+    //holds info for the hours donut chart
     private class HoursChartData {
         private double totalHours;
         private double totalHoursGoal;
@@ -42,6 +44,7 @@ public class MiniStatsServlet extends HttpServlet {
         }
     }
 
+    //holds info for the favorite mode donut chart
     private class FavModeChartData {
         private String favMode;
         private double favModeMiles;
@@ -52,6 +55,7 @@ public class MiniStatsServlet extends HttpServlet {
         }
     }
 
+    //holds info for the challenges donut chart
     private class ChallengesChartData {
         private int totalChallengesWon;
         private int totalChallengesGoal;
@@ -84,7 +88,6 @@ public class MiniStatsServlet extends HttpServlet {
         int totalChallengesWon = 1;
         int totalChallengesGoal = 5;
 
-        //FIXME: replace the following variables with real data from datastore
         ArrayList<Object> miniStats = new ArrayList<Object>();
         miniStats.add(new MilesChartData(totalSustainableMiles, totalSustainableMilesGoal));
         miniStats.add(new HoursChartData(totalSustainableHours, totalSustainableHoursGoal));
