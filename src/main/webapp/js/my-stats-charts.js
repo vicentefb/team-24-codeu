@@ -107,154 +107,177 @@ function drawBarGraph() {
  * the function that draws the miles counter donut chart
  */
 function drawMilesCounterDonut() {
-    var totalSustainableMiles = 8.5; //FIXME: replace with actual data
-    var totalMilesGoal = 15; //will be hard coded now, they can set goal in V2
-    var restOfPie = totalMilesGoal - totalSustainableMiles;
-    if (restOfPie < 0) {
-        restOfPie = 0;
-    }
-
-    var milesText = "My Sustainable Miles: " + totalSustainableMiles + " mi";
-    var milesGoalText = "Miles to Reach My Goal: " + restOfPie + " mi";
-
-    var weekly_miles_data = google.visualization.arrayToDataTable([
-        ['Miles Stats', 'Miles Traveled Sustainably', { type: 'string', role: 'tooltip' }],
-        ['', totalSustainableMiles, milesText], //replace with actual
-        ['', restOfPie, milesGoalText],
-    ]);
-
-    //dictionary of customization for the chart
-    var miles_circle_options = {
-        pieHole: 0.6,
-        pieSliceText: 'none',
-        slices: {
-            0: { color: '#5cd65c' },
-            1: { color: '#e6e6e6' }
-        },
-        legend: {
-            position: 'none'
+    fetch("/miniStats")
+    .then((response) => {
+        return response.json();
+    })
+    .then((miniStatsJson) => {
+        var totalSustainableMiles = miniStatsJson[0].totalMiles;
+        var totalMilesGoal = miniStatsJson[0].totalMilesGoal;
+        var restOfPie = totalMilesGoal - totalSustainableMiles;
+        if (restOfPie < 0) {
+            restOfPie = 0;
         }
-    };
 
-    //create an instance of the type of chart
-    var miles_chart = new google.visualization.PieChart(document.getElementById('weekly_miles_chart'));
+        var milesText = "My Sustainable Miles: " + totalSustainableMiles + " mi";
+        var milesGoalText = "Miles to Reach My Goal: " + restOfPie + " mi";
+    
+        var weekly_miles_data = google.visualization.arrayToDataTable([
+            ['Miles Stats', 'Miles Traveled Sustainably', { type: 'string', role: 'tooltip' }],
+            ['', totalSustainableMiles, milesText], //replace with actual
+            ['', restOfPie, milesGoalText],
+        ]);
 
-    //draw the chart
-    miles_chart.draw(weekly_miles_data, miles_circle_options);
+        //dictionary of customization for the chart
+        var miles_circle_options = {
+            pieHole: 0.6,
+            pieSliceText: 'none',
+            slices: {
+                0: { color: '#5cd65c' },
+                1: { color: '#e6e6e6' }
+            },
+            legend: {
+                position: 'none'
+            }
+        };
+
+        //create an instance of the type of chart
+        var miles_chart = new google.visualization.PieChart(document.getElementById('weekly_miles_chart'));
+        //draw the chart
+        miles_chart.draw(weekly_miles_data, miles_circle_options);
+    });
 }
 
 /*
  * the function that draws the hours counter donut chart
  */
 function drawHoursCounterDonut() {
-    var totalSustainableHours = 2; //FIXME: replace with actual data
-    var totalHoursGoal = 8; //will be hard coded now, they can set goal in V2
-    var restOfPie = totalHoursGoal - totalSustainableHours;
-    if (restOfPie < 0) {
-        restOfPie = 0;
-    }
+    fetch("/miniStats")
+    .then((response) => {
+        return response.json();
+    })
+    .then((miniStatsJson) => {
+        var totalSustainableHours = miniStatsJson[1].totalHours;
+        var totalHoursGoal = miniStatsJson[1].totalHoursGoal;
+        var restOfPie = totalHoursGoal - totalSustainableHours;
+        if (restOfPie < 0) {
+            restOfPie = 0;
+        }
 
-    var hoursText = "My Sustainable Hours: " + totalSustainableHours + " hrs";
-    var hoursGoalText = "Hours to Reach My Goal: " + restOfPie + " hrs";
+        var hoursText = "My Sustainable Hours: " + totalSustainableHours + " hrs";
+        var hoursGoalText = "Hours to Reach My Goal: " + restOfPie + " hrs";
+    
+        var weekly_hours_data = google.visualization.arrayToDataTable([
+            ['Hours Stats', 'Hours Traveled Sustainably', { type: 'string', role: 'tooltip' }],
+            ['', totalSustainableHours, hoursText], 
+            ['', restOfPie, hoursGoalText],
+        ]);
 
-    var weekly_hours_data = google.visualization.arrayToDataTable([
-        ['Hours Stats', 'Hours Traveled Sustainably', { type: 'string', role: 'tooltip' }],
-        ['', totalSustainableHours, hoursText], 
-        ['', restOfPie, hoursGoalText],
-    ]);
+        //dictionary of customization for the chart
+        var hours_circle_options = {
+            pieHole: 0.6,
+            pieSliceText: 'none',
+            slices: {
+                0: { color: '#5cd65c' },
+                1: { color: '#e6e6e6' }
+            },
+            legend: {
+                position: 'none'
+            },
+        };
 
-    //dictionary of customization for the chart
-    var hours_circle_options = {
-        pieHole: 0.6,
-        pieSliceText: 'none',
-        slices: {
-            0: { color: '#5cd65c' },
-            1: { color: '#e6e6e6' }
-        },
-        legend: {
-            position: 'none'
-        },
-    };
-
-    //create an instance of the type of chart (bar here)
-    var hours_chart = new google.visualization.PieChart(document.getElementById('weekly_hours_chart'));
-
-    //draw the chart
-    hours_chart.draw(weekly_hours_data, hours_circle_options);
+        //create an instance of the type of chart (bar here)
+        var hours_chart = new google.visualization.PieChart(document.getElementById('weekly_hours_chart'));
+        //draw the chart
+        hours_chart.draw(weekly_hours_data, hours_circle_options);
+    });
 }
 
 /*
  * the function that draws the favorite mode donut chart
  */
 function drawFavModeDonut() {
-    var favoriteMode = 'Bike'; //FIXME: replace with actual data
-    var favModeMiles = 12; //FIXME: replace with actual data
+    fetch("/miniStats")
+    .then((response) => {
+        return response.json();
+    })
+    .then((miniStatsJson) => {
+        var favoriteMode = miniStatsJson[2].favMode; 
+        var favModeMiles = miniStatsJson[2].favModeMiles;
+    
+        var favModeText = "Favorite Mode: " + favoriteMode + ", " + favModeMiles + " mi";
 
-    var favModeText = "Miles on " + favoriteMode + ": " + favModeMiles + " hrs";
-
-    var weekly_fav_mode_data = google.visualization.arrayToDataTable([
-        ['Mode of Transportation', 'Miles Traveled', { type: 'string', role: 'tooltip' }],
-        [favoriteMode, favModeMiles, favModeText], 
-    ]);
-
-    //dictionary of customization for the chart
-    var fav_mode_circle_options = {
-        pieHole: 0.6,
-        pieSliceText: 'none',
-        slices: {
-            0: { color: '#5cd65c' }
-        },
-        legend: {
-            position: 'none'
-        }
-    };
-
-    //create an instance of the type of chart
-    var fav_mode_chart = new google.visualization.PieChart(document.getElementById('weekly_fav_mode_chart'));
-
-    //draw the chart
-    fav_mode_chart.draw(weekly_fav_mode_data, fav_mode_circle_options);
+        var weekly_fav_mode_data = google.visualization.arrayToDataTable([
+            ['Mode of Transportation', 'Miles Traveled', { type: 'string', role: 'tooltip' }],
+            [favoriteMode, favModeMiles, favModeText], 
+        ]);
+    
+        //dictionary of customization for the chart
+        var fav_mode_circle_options = {
+            pieHole: 0.6,
+            pieSliceText: 'none',
+            slices: {
+                0: { color: '#5cd65c' }
+            },
+            legend: {
+                position: 'none'
+            }
+        };
+    
+        //create an instance of the type of chart
+        var fav_mode_chart = new google.visualization.PieChart(document.getElementById('weekly_fav_mode_chart'));
+    
+        //draw the chart
+        fav_mode_chart.draw(weekly_fav_mode_data, fav_mode_circle_options);
+    });
 }
 
 /*
  * the function that draws the challenges won donut chart
  */
 function drawChalsWonDonut() {
-    var totalChalsWon = 2; //FIXME: replace with actual data
-    var totalChalsWonGoal = 5; //will be hard coded now, they can set goal in V2
-    var restOfPie = totalChalsWonGoal - totalChalsWon;
-    if (restOfPie < 0) {
-        restOfPie = 0;
-    }
-
-    var chalsText = "My Challenges Won: " + totalChalsWon;
-    var chalsGoalText = "Challenges to Reach My Goal: " + restOfPie;
-
-    var weekly_chals_won_data = google.visualization.arrayToDataTable([
-        ['Challenges Won Stats', 'Challenges Won', { type: 'string', role: 'tooltip' }],
-        ['', totalChalsWon, chalsText],
-        ['', restOfPie, chalsGoalText],
-    ]);
-
-    //dictionary of customization for the chart
-    var chals_won_circle_options = {
-        pieHole: 0.6,
-        pieSliceText: 'none',
-        slices: {
-            0: { color: '#5cd65c' },
-            1: { color: '#e6e6e6' }
-        },
-        legend: {
-            position: 'none'
-        },
-        tooltip: {
-            1: { trigger: 'none' }, //FIXME: how to only allow the green section to be hoverable?
+    fetch("/miniStats")
+    .then((response) => {
+        return response.json();
+    })
+    .then((miniStatsJson) => {
+        var totalChalsWon = miniStatsJson[3].totalChallengesWon;
+        var totalChalsWonGoal = miniStatsJson[3].totalChallengesGoal;
+        var restOfPie = totalChalsWonGoal - totalChalsWon;
+        if (restOfPie < 0) {
+            restOfPie = 0;
         }
-    };
 
-    //create an instance of the type of chart (bar here)
-    var chals_won_chart = new google.visualization.PieChart(document.getElementById('weekly_chals_won_chart'));
+        var chalsText = "My Challenges Won: " + totalChalsWon;
+        var chalsGoalText = "Challenges to Reach My Goal: " + restOfPie;
+    
+        var weekly_chals_won_data = google.visualization.arrayToDataTable([
+            ['Challenges Won Stats', 'Challenges Won', { type: 'string', role: 'tooltip' }],
+            ['', totalChalsWon, chalsText],
+            ['', restOfPie, chalsGoalText],
+        ]);
+    
+        //dictionary of customization for the chart
+        var chals_won_circle_options = {
+            pieHole: 0.6,
+            pieSliceText: 'none',
+            slices: {
+                0: { color: '#5cd65c' },
+                1: { color: '#e6e6e6' }
+            },
+            legend: {
+                position: 'none'
+            },
+            tooltip: {
+                1: { trigger: 'none' }, //FIXME: how to only allow the green section to be hoverable?
+            }
+        };
+    
+        //create an instance of the type of chart (bar here)
+        var chals_won_chart = new google.visualization.PieChart(document.getElementById('weekly_chals_won_chart'));
+    
+        //draw the chart
+        chals_won_chart.draw(weekly_chals_won_data, chals_won_circle_options);
 
-    //draw the chart
-    chals_won_chart.draw(weekly_chals_won_data, chals_won_circle_options);
+    })
 }
