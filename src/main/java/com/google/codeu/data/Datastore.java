@@ -27,7 +27,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 
 import java.util.*;
 
-
+public class Datastore {
   private DatastoreService datastore;
 
   public Datastore() {
@@ -51,7 +51,7 @@ import java.util.*;
       .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
 	PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
-    
+
 	if(userEntity == null) {
       return null;
     }
@@ -96,9 +96,9 @@ import java.util.*;
     String idString = entity.getKey().getName();
     UUID id = UUID.fromString(idString);
     String text = (String) entity.getProperty("text");
-    String user = (String) entity.getProperty("user"); 
+    String user = (String) entity.getProperty("user");
     long timestamp = (long) entity.getProperty("timestamp");
-    
+
     return new Message(id, user, text, timestamp);
 }
 
@@ -107,7 +107,7 @@ import java.util.*;
    *
    * @return the correpsonding message list.
    */
-  private List<Message> getMessageList(PreparedQuery results)	{ 
+  private List<Message> getMessageList(PreparedQuery results)	{
     List<Message> messages = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       try {
@@ -148,7 +148,7 @@ import java.util.*;
     List<Message> messages = new ArrayList<>();
     Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
-    
+
     return getMessageList(results);
   }
 
@@ -156,7 +156,7 @@ import java.util.*;
   public int getTotalMessageCount(){
     Query query = new Query("Message");
     PreparedQuery results = datastore.prepare(query);
-    
+
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
@@ -170,7 +170,7 @@ import java.util.*;
     float distanceTravelled = (float) entity.getProperty("distanceTravelled");
     float departureTime = (float) entity.getProperty("departureTime");
     float timeSpent = (float) entity.getProperty("timeSpent");
-    
+
     return new Route(addressList, distanceTravelled, departureTime, timeSpent);
   }
 
@@ -183,7 +183,7 @@ import java.util.*;
 	  List<Route> routes = new ArrayList<>();
 	  for (Entity entity : results.asIterable())  {
 		  try  {
-			  Route route = enttiyToRoute(entity);
+			  Route route = entityToRoute(entity);
 			  routes.add(route);
 		  } catch (Exception e)  {
 			  System.err.println("Error reading route.");
@@ -194,13 +194,13 @@ import java.util.*;
 	  return routes;
   }
 
-  /** 
+  /**
    * @return all of the routes currently in the datastore. List is sorted by departure time, descending.
    */
   public List<Route> getAllRoutes()	{
     Query query = new Query("Route").addSort("departureTime", SortDirection.DESCENDING);
 	PreparedQuery results = datastore.prepare(query);
-	return getRouteList(routes);
+	return getRouteList(results);
   }
 
   /**
