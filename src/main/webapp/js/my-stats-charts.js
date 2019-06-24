@@ -20,13 +20,13 @@ function drawDonutChart() {
     .then((modesJson) => {
 
         var weekly_donut_data = google.visualization.arrayToDataTable([
-            ['Commute Method', 'Miles per Week'],
-            [modesJson[0].name, modesJson[0].miles],
-            [modesJson[1].name, modesJson[1].miles],
-            [modesJson[2].name, modesJson[2].miles],
-            [modesJson[3].name, modesJson[3].miles],
-            [modesJson[4].name, modesJson[4].miles],
-            [modesJson[5].name, modesJson[5].miles]
+            ['Commute Method', 'Miles per Week', { type: 'string', role: 'tooltip' }],
+            [modesJson[0].name, modesJson[0].miles, modesJson[0].name + ": " + modesJson[0].miles + " miles"],
+            [modesJson[1].name, modesJson[1].miles, modesJson[1].name + ": " + modesJson[1].miles + " miles"],
+            [modesJson[2].name, modesJson[2].miles, modesJson[2].name + ": " + modesJson[2].miles + " miles"],
+            [modesJson[3].name, modesJson[3].miles, modesJson[3].name + ": " + modesJson[3].miles + " miles"],
+            [modesJson[4].name, modesJson[4].miles, modesJson[4].name + ": " + modesJson[4].miles + " miles"],
+            [modesJson[5].name, modesJson[5].miles, modesJson[5].name + ": " + modesJson[5].miles + " miles"]
         ]);
 
         //sorts the data from fewest hours per week to most
@@ -215,7 +215,7 @@ function drawFavModeDonut() {
         return response.json();
     })
     .then((miniStatsJson) => {
-        var favoriteMode = miniStatsJson[2].favMode; 
+        var favoriteMode = miniStatsJson[2].favMode;
         var favModeMiles = miniStatsJson[2].favModeMiles;
     
         var favModeText = "Favorite Mode: " + favoriteMode + ", " + favModeMiles + " mi";
@@ -236,6 +236,31 @@ function drawFavModeDonut() {
                 position: 'none'
             }
         };
+
+        //sets correct icon image that appears below the chart based on the mode
+        switch(favoriteMode) {
+            case "Bike": 
+                document.getElementById('fav_mode_icon').src="/css/png/005-bicycle.png";
+                break;
+            case "Walk": 
+                document.getElementById("fav_mode_icon").src="/css/png/013-walk.png";
+                break;
+            case "Car (Carpool)": 
+                document.getElementById("fav_mode_icon").src="/css/png/001-key.png";
+                break;
+            case "Car (Single Rider)": 
+                document.getElementById("fav_mode_icon").src="/css/png/001-key.png";
+                break;
+            case "Scooter": 
+                document.getElementById("fav_mode_icon").src="/css/png/004-scooter.png";
+                break; 
+            case "Rollerblade": 
+                document.getElementById("fav_mode_icon").src="/css/png/002-roller-skate.png";
+                break;        
+            default:
+                document.getElementById("fav_mode_icon").src="/css/png/011-like.png";
+                break;
+        }
     
         //create an instance of the type of chart
         var fav_mode_chart = new google.visualization.PieChart(document.getElementById('weekly_fav_mode_chart'));
