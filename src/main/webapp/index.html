@@ -15,24 +15,68 @@ limitations under the License.
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>CodeU 2019 Starter Project</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <!--link rel="stylesheet" href="/bootstrap-4.3.1-dist/css/bootstrap.css"-->
+    <!-- taking this out adds a green border - link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"-->
+    <!--link rel="stylesheet" href="/css/main.css"-->
+    <!--added lines 28-30-->
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
     <script src="/js/navigation-loader.js"></script>
+    <title>CodeU 2019 Starter Project</title>
+
+    <!--added style tags and lines 52-53-->
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="css/index.css" rel="stylesheet">
+
   </head>
   <body onload="addLoginOrLogoutLinkToNavigation();">
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-      </ul>
-    </nav>
-    <h1>CodeU Starter Project</h1>
-    <p>This is the CodeU starter project. Click the links above to login and visit your page.
-    You can post messages on your page, and you can visit other user pages if you have
-    their URL.</p>
-    <p>Team 24 is the best team of Google CodeU Summer 2019!</p>
+    <body class="text-center"></body>
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">Team 24</h3>
+          <nav class="nav nav-masthead justify-content-center" id="navigation">
+            <a class="nav-link active" href="/">Home</a>
+            <a class="nav-link" href="/aboutus.html">About Our Team</a>
+          </nav>
+        </div>
+      </header>
+      <main role="main" class="inner cover">  
+        <!--h1>Team 24 CodeU Project</h1-->
+        <h1 class="cover-heading">Team 24 CodeU Project</h1>
+        <!--p>This is the CodeU starter project. Click the links above to login and visit your page.
+        You can post messages on your page, and you can visit other user pages if you have
+        their URL.</p-->
+        <p class="lead">This is Team 24's CodeU project. Click the link above to login.</p>
+      </main>
+      <footer class="mastfoot mt-auto"></footer>
+    </div>
   </body>
 </html>
+
+
+
+
