@@ -160,18 +160,27 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
+  private LatLong mapToLatLong(Map map)  {
+    return new LatLong((double) map.get("lat"), (double) map.get("long"));
+  }
+
+  private Trip mapToTrip(Map map)  {
+    return new Trip(mapToLatLong((Map) map.get("startLocation")),
+      mapToLatLong((Map) map.get("endLocation")),
+      (String) map.get("transportationMode"),
+      (double) map.get("distanceTravelled"),
+      (double) map.get("timeSpent"),
+      (int) map.get("departureTime"));
+  }
+
   /**
    * Given an entity, create and @return its corresponding route object.
    */
   private Route entityToRoute(Entity entity)  {
-    String idString = entity.getKey().getName();
-    UUID id = UUID.fromString(idString);
-    List<String> addressList = (List<String>) entity.getProperty("addressList");
-    float distanceTravelled = (float) entity.getProperty("distanceTravelled");
-    float departureTime = (float) entity.getProperty("departureTime");
-    float timeSpent = (float) entity.getProperty("timeSpent");
-
-    return new Route(addressList, distanceTravelled, departureTime, timeSpent);
+    List<Map> tripMapList = (List<Map>) entity.getProperty("tripList");
+    ArrayList<Trip> tripList = new ArrayList<Trip>();
+    for (Map tripMap : tripMapList) tripList.add(mapToTrip(tripMap));
+    return new Route(tripList);
   }
 
   /**
@@ -180,18 +189,18 @@ public class Datastore {
    * @return the correpsonding route list.
    */
   private List<Route> getRouteList(PreparedQuery results)  {
-	  List<Route> routes = new ArrayList<>();
-	  for (Entity entity : results.asIterable())  {
-		  try  {
-			  Route route = entityToRoute(entity);
-			  routes.add(route);
-		  } catch (Exception e)  {
-			  System.err.println("Error reading route.");
-			  System.err.println(entity.toString());
-			  e.printStackTrace();
-		  }
-	  }
-	  return routes;
+          List<Route> routes = new ArrayList<>();
+          for (Entity entity : results.asIterable())  {
+        	  try  {
+        		  Route route = entityToRoute(entity);
+        		  routes.add(route);
+        	  } catch (Exception e)  {
+        		  System.err.println("Error reading route.");
+        		  System.err.println(entity.toString());
+        		  e.printStackTrace();
+        	  }
+          }
+          return routes;
   }
 
   /**
@@ -199,19 +208,19 @@ public class Datastore {
    */
   public List<Route> getAllRoutes()	{
     Query query = new Query("Route").addSort("departureTime", SortDirection.DESCENDING);
-	PreparedQuery results = datastore.prepare(query);
-	return getRouteList(results);
+        PreparedQuery results = datastore.prepare(query);
+        return getRouteList(results);
   }
 
   /**
    * Gets all routes used by a specific user.
    */
   public List<Route> getRoutes(String user)	{
-	  Query query = 
-		  new Query("Route")
-		    .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-			.addSort("departureTime", SortDirection.DESCENDING);
-	  PreparedQuery results = datastore.prepare(query);
-	  return getRouteList(results);
+          Query query = 
+        	  new Query("Route")
+        	    .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+        		.addSort("departureTime", SortDirection.DESCENDING);
+          PreparedQuery results = datastore.prepare(query);
+          return getRouteList(results);
   }
 }
