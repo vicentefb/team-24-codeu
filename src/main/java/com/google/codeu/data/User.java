@@ -16,3 +16,4 @@ public class User {
   public String getAboutMe() {
     return aboutMe;
   }
+}
