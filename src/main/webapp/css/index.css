@@ -27,7 +27,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: rgb(92, 214, 92);
+  background-color: rgb(19, 187, 106);
 }
 
 body {
@@ -39,7 +39,7 @@ body {
 }
 
 .cover-container {
-  max-width: 75em;
+  max-width: 42em;
 }
 
 
