@@ -1,28 +1,35 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <title>My Dashboard</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="/js/my-stats-charts.js"></script>
+    <script src="/js/navigation-loader.js"></script>
 
-    <!--the following link allow Bootstrap to function-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!--stylesheet for this page-->
     <link rel="stylesheet" href="/css/my-stats.css">
-
-    <title>My Commute Stats</title>
+    <link rel="stylesheet" href="/css/site.css">
 </head>
-<body>
+<body onload="addLinksBasedOnLoginStatus();">
+    <header>
+        <div>
+            <nav class="row nav nav-masthead justify-content-center" id="navigation">
+                <a class="nav-link" href="/index.html">Home</a>
+                <a class="nav-link" href="/aboutus.html">About Team 24</a>
+                <a class="nav-link" href="/mission-page.html">Our Mission</a>
+            </nav>
+        </div>
+    </header>
     <div class="row">
         <div class="col-md-12">
-            <p class="header_1 text-center">My Weekly Commute Stats</p>
+            <p class="title text-center">My Dashboard</p>
             <br />
         </div>
     </div>
     <!--row of circles for quick stats-->
     <div class="row">
         <div class="col-md-12">
-            <p class="header_2 text-center">Crunch the Numbers!</p>
+            <p class="header_2 text-center">My Weekly Stats</p>
         </div>
     </div>
     <div class="row extra_bottom_margin">
