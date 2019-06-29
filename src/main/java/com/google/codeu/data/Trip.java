@@ -50,7 +50,7 @@ public class Trip	{
 		return departureTime;
 	}
 
-	public Map asMap()	{
+	public Map<List, ?> asMap()	{
 		HashMap map = new HashMap();
 		map.put("startLocation", startLocation.asMap());
 		map.put("endLocation", endLocation.asMap());
