@@ -97,7 +97,7 @@ public class RouteFinderServlet extends HttpServlet {
     return new LatLong((double) map.get("lat"), (double) map.get("lng"));
   }
 
-  private Map<?, ?>  jsonStringToMap(String jsonString)	{
+  private Map<String, ?>  jsonStringToMap(String jsonString)	{
     Gson gson = new Gson();
     Map map = gson.fromJson(jsonString, Map.class);
     return map;
