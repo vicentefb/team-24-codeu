@@ -14,7 +14,7 @@ public class Route	{
     this.tripList = tripList;
   }
   
-  public List asList()	{
+  public List<Trip> asList()	{
     return this.tripList;
   }
 }
