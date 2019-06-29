@@ -1,24 +1,46 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
-  <title>Displaying Text Directions With setPanel()</title>
+  <title>New Trip</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="/js/navigation-loader.js"></script>
+  <link href="/css/site.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/map-page.css">
 </head>
-<label for="start">Start: </label>
-<input class="form-control" id="start" type="text" placeholder="Search...">
-<label for="start">End: </label>
-<input class="form-control" id="end" type="text" placeholder="Search...">
-<input type="submit" value="Calculate Route" onclick="calculateAndDisplayRoute()"/>
-<div id="right-panel"></div>
-<div id="map"></div>
+
+<body onload="addLinksBasedOnLoginStatus();">
+  <div class="container-fluid">
+    <header>
+      <div>
+        <nav class="row nav nav-masthead justify-content-center" id="navigation">
+          <a class="nav-link" href="/index.html">Home</a>
+          <a class="nav-link" href="/aboutus.html">About Team 24</a>
+          <a class="nav-link" href="/mission-page.html">Our Mission</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <label for="start">Start: </label>
+      <input class="form-control" id="start" type="text" placeholder="Search...">
+      <label for="start">End: </label>
+      <input class="form-control" id="end" type="text" placeholder="Search...">
+      <input type="submit" value="Calculate Route" onclick="calculateAndDisplayRoute()" />
+      <div id="right-panel"></div>
+      <div id="map" style="height:45vw;"></div>
+    </main>
+  </div>
+</body>
 
 <!-- Google Maps scripts -->
 <script src="js/map-loader.js"></script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDie7L-I-7ytTG6AiByhJefoF5Lp1B3YHs&callback=initMap&libraries=places&language=en"></script>
-</body>
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDie7L-I-7ytTG6AiByhJefoF5Lp1B3YHs&callback=initMap&libraries=places&language=en">
+</script>
+
 </html>
 
 <!-- OUR API KEY -->
