@@ -54,11 +54,10 @@ public class RouteFinderServlet extends HttpServlet {
 
     if(startAddress == null || startAddress.equals("") ||
        endAddress == null || endAddress.equals("")) {
-      // Request is invalid, return empty response
-      return;
+      response.getOutputStream().println("ERROR! One address is either null or empty.");
     }
 
-    String key = "YOUR_API_KEY_HERE"
+    String key = "AIzaSyDie7L-I-7ytTG6AiByhJefoF5Lp1B3YHs";
     URL url = new URL(getDirectionsLink(startAddress, endAddress, key));
     HttpURLConnection cnxn = (HttpURLConnection) url.openConnection();
     cnxn.setRequestMethod("GET");
