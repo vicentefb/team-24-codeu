@@ -1,0 +1,97 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+/*Homepage Style*/
+.bg {
+    background-image: url("/css/leaf_background.jpg");
+    height: 100% !important; 
+    width: 100% !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.top-padding {
+    padding-top: 18%;
+}
+
+.title {
+    color: darkgreen;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3.5vw;
+}
+
+.sub-title-1 {
+    color: darkgreen;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5vw;
+}
+
+.sub-title-2 {
+    color: black;
+    text-align: center;
+    font-size: 1vw;
+}
+
+a.title-link {
+    color: darkgreen;
+    text-align: center;
+    font-size: 1vw;
+    text-decoration: none;
+}
+
+a.title-link:hover {
+    color: darkgreen;
+    text-align: center;
+    font-size: 1vw;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/*
+ * Header
+ */
+.masthead {
+    margin-bottom: 2rem;
+}
+  
+.masthead-brand {
+    margin-bottom: 0;
+}
+  
+.nav-masthead .nav-link {
+    padding: .25rem 0;
+    font-weight: 700;
+    color: rgba(255, 255, 255);
+    background-color: transparent;
+    border-bottom: .25rem solid transparent;
+}
+  
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+    border-bottom-color: rgba(255, 255, 255, .25);
+}
+  
+.nav-masthead .nav-link + .nav-link {
+    margin-right: 3rem;
+}
+  
+.nav-masthead .active {
+    color: #fff;
+    border-bottom-color: #fff;
+    margin-right: 3rem;
+}
+  
+@media (min-width: 48em) {
+    .masthead-brand {
+        float: center;
+    }
+    .nav-masthead {
+        float: center;
+    }
+}
