@@ -1,29 +1,45 @@
-<html>
+<!--
+Copyright 2019 Google Inc.
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <link href="/css/home-page.css" rel="stylesheet">
     <script src="/js/navigation-loader.js"></script>
+    <link href="/css/home.css" rel="stylesheet">
 </head>
 
 <body onload="addLinksBasedOnLoginStatus();">
-    <div class="container-fluid">
+    <div class="wrapper container-fluid">
         <div class="bg">
             <header>
                 <div>
                     <nav class="row nav nav-masthead justify-content-center" id="navigation">
-                        <a class="nav-link active" href="/">Home</a>
+                        <a class="nav-link" href="/index.html">Home</a>
                         <a class="nav-link" href="/aboutus.html">About Team 24</a>
-                        <a class="nav-link" href="/map.html">New Trip</a>
+                        <a class="nav-link" href="/mission-page.html">Our Mission</a>
                     </nav>
                 </div>
             </header>
             <main role="main" class="inner cover">
-                <h1 class="title top-padding">S M A R T R I D E</h1>
-                <h1 class="sub-title-1">Team 24 CodeU Project</h1>
-                <a class="title-link" href="/mission-page.html"><p>Read About Our Mission Here</p></a>
+                <h1 class="title top-padding text-center">S M A R T R I D E</h1>
+                <h1 class="sub-title-1 text-center">Team 24 CodeU Project</h1>
+                <h6 class="text-center"><a class="title-link" href="/mission-page.html">Read About Our Mission Here</a></h6>
+                <br />
+                <p class="text-center">Login above to access all of our site!</p>
             </main>
             <footer>
             </footer>
