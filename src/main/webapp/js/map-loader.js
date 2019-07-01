@@ -69,6 +69,11 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 
+// add data on how stats would be effected by route
+function calcAndDisplayStatEffect() {
+   
+}
+
 function calculateAndDisplayRoute() {
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
@@ -79,6 +84,8 @@ function calculateAndDisplayRoute() {
       travelMode: 'DRIVING'
     }, function(response, status) {
       if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+        // add a call to calcAndDisplayStatEffect() here-ish
         for( var i=0, len = response.routes.length; i<len; i++){
             new google.maps.DirectionsRenderer({
                 map: map,
@@ -91,4 +98,22 @@ function calculateAndDisplayRoute() {
         window.alert('Directions request failed due to ' + status);
       }
     });
+
+}
+
+// javascript to make the collapsible stats effect box reactive
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
 }
