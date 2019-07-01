@@ -28,7 +28,14 @@
       <input class="form-control" id="start" type="text" placeholder="Search...">
       <label for="start">End: </label>
       <input class="form-control" id="end" type="text" placeholder="Search...">
-      <input type="submit" value="Calculate Route" onclick="calculateAndDisplayRoute()" />
+      <b>Mode of Travel: </b>
+      <select id="mode">
+        <option value="DRIVING">Driving</option>
+        <option value="WALKING">Walking</option>
+        <option value="BICYCLING">Bicycling</option>
+        <option value="TRANSIT">Transit</option>
+      </select>
+      <!--<input type="submit" value="Calculate Route" onclick="calculateAndDisplayRoute()" />-->
       <div id="right-panel"></div>
       <div id="map" style="height:45vw;"></div>
     </main>
