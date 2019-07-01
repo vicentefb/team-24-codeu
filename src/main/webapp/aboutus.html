@@ -19,39 +19,63 @@ limitations under the License.
   <head>
     <meta charset="UTF-8">
     <title>About Us</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="/js/navigation-loader.js"></script>
+    <link href="/css/site.css" rel="stylesheet">
   </head>
-  </head>
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-      </ul>
-    </nav>
-    <h1>About Our Team</h1>
-    <h2>Alex Sieusahai</h2>
-    <ul>
-      <li>Summer Feelz: Bubbly, Work, Pastimes</li>
-      <li>Aspirational Hobby: Sculpture</li>
-      <li>Ask me About: Super basic animation!</li>
-    </ul>
-    <h2>Sophie Bohr</h2>
-    <ul>
-      <li>Summer Feelz: Relaxing, Friends, Ice Cream</li>
-      <li>Aspirational Hobby: Playwriting</li>
-      <li>Ask me About: Broadway Musicals</li>
-    </ul>
-    <h2>Vicente Ferrara</h2>
-    <ul>
-      <li>Summer Feelz: Work, Gym, Football.</li>
-      <li>Aspirational Hobby: Creating online courses of the stuff I learn.</li>
-      <li>Ask me About: Electronics, Football, SciFi movies.</li>
-    </ul>
-    <h2>Eva Lynch</h2>
-    <ul>
-      <li>Summer Feelz: Sunny, Productive, Fun</li>
-      <li>Aspirational Hobby: Piano/Guitar</li>
-      <li>Ask me About: Creative Writing, Anime/Manga, Rowing</li>
-    </ul>
-  </body>
+  <body onload="addLinksBasedOnLoginStatus();">
+      <div class="container-fluid">
+          <header>
+              <div>
+                  <nav class="row nav nav-masthead justify-content-center" id="navigation">
+                      <a class="nav-link" href="/index.html">Home</a>
+                      <a class="nav-link" href="/aboutus.html">About Team 24</a>
+                      <a class="nav-link" href="/mission-page.html">Our Mission</a>
+                  </nav>
+              </div>
+          </header>
+          <main role="main" class="inner cover">
+              <div class="row">
+                <div class="col-md-12">
+                  <br />
+                  <h1 class="title text-center">About Team 24</h1>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-5">
+                      <h2>Sophie Bohr</h2>
+                      <ul>
+                        <li>Worked on charts and displaying data for the dashboard, overall navigation & styling, implementing Bootstrap</li>
+                      </ul>
+                      <h2>Eva Lynch</h2>
+                      <ul>
+                        <li>Worked on _______</li>
+                      </ul>
+                      <h2>Alex Sieusahai</h2>
+                      <ul>
+                        <li>Worked on _______</li>
+                      </ul>
+                      <h2>Vicente Ferrara</h2>
+                      <ul>
+                        <li>Worked on _______</li>
+                      </ul>
+                      <h2>Dushyanth Chickabasapa</h2>
+                      <ul>
+                        <li>Team 24 PA</li>
+                      </ul>
+                  </div>
+                  <div class="col-md-7">
+                    <br />
+                    <br />
+                    <img class="team-pic1-size" src="/css/team_pic_1.jpg">
+                    <img class="team-pic2-size" src="/css/team_pic_2.jpg">
+                  </div>
+              </div>
+          </main>
+      </div>
+      <footer>
+      </footer>
+      </div>
+  </body>  
 </html>

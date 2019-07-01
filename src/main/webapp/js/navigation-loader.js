@@ -18,7 +18,7 @@
  * Adds a login or logout link to the page, depending on whether the user is
  * already logged in.
  */
-function addLoginOrLogoutLinkToNavigation() {
+function addLinksBasedOnLoginStatus() {
   const navigationElement = document.getElementById('navigation');
   if (!navigationElement) {
     console.warn('Navigation element not found!');
@@ -31,14 +31,15 @@ function addLoginOrLogoutLinkToNavigation() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createLink(
-              '/user-page.html?user=' + loginStatus.username, 'Your Page'));
-
-          navigationElement.appendChild(
-              createLink('/logout', 'Logout'));
-        } else {
-          navigationElement.appendChild(
-              createLink('/login', 'Login'));
+          navigationElement.appendChild(createLink('/user-page.html?user=' + loginStatus.username, 'My Info'));
+          navigationElement.appendChild(createLink('/my-stats.html', 'My Dashboard'));
+          navigationElement.appendChild(createLink('/map.html', 'New Trip'));
+          navigationElement.appendChild(createLink('/feed.html', 'Messages'));
+          navigationElement.appendChild(createLink('/community.html', 'Community'));
+          navigationElement.appendChild(createLink('/logout', 'Logout'));
+        }
+        else {
+          navigationElement.appendChild(createLink('/login', 'Login'));
         }
       });
 }
