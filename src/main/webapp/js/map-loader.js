@@ -73,6 +73,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function calculateAndDisplayRoute() {
+    if(directionsDisplay){
+        directionsDisplay.setMap(null);
+    }
     var selectedMode = document.getElementById('mode').value;
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
@@ -84,11 +87,9 @@ function calculateAndDisplayRoute() {
     }, function(response, status) {
       if (status === 'OK') {
         for( var i=0, len = response.routes.length; i<len; i++){
-            new google.maps.DirectionsRenderer({
-                map: map,
-                directions: response,
-                routeIndex: i
-            });
+            directionsDisplay.map = map;
+            directionsDisplay.directions = response;
+            directionsDisplay.routeIndex = i;
             directionsDisplay.setDirections(response);
         }
       } else {
