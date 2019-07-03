@@ -23,6 +23,7 @@ import com.google.codeu.data.Route;
 import com.google.codeu.data.Trip;
 import com.google.codeu.data.LatLong;
 import com.google.codeu.data.User;
+import com.google.codeu.servlets.QueryHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -57,15 +58,11 @@ public class RouteFinderServlet extends HttpServlet {
       response.getOutputStream().println("ERROR! One address is either null or empty.");
     }
 
-    String key = "AIzaSyDie7L-I-7ytTG6AiByhJefoF5Lp1B3YHs";
-    URL url = new URL(getDirectionsLink(startAddress, endAddress, key));
-    HttpURLConnection cnxn = (HttpURLConnection) url.openConnection();
-    cnxn.setRequestMethod("GET");
-
-    Map<?, ?> directionsResult = jsonStringToMap(readOpenCnxn(cnxn));
+    String key = "YOUR_API_KEY_HERE";
+    QueryHelper queryHelper = new QueryHelper(key);
     List<Route> routeList = new ArrayList<Route>();
-
     Trip someTrip;
+    Map directionsResult = queryHelper.mapApiCall(startAddress, endAddress);
 
     for (Map route : (ArrayList<Map>) directionsResult.get("routes"))  {
       for (Map leg : (ArrayList<Map>) route.get("legs"))  {
@@ -78,7 +75,6 @@ public class RouteFinderServlet extends HttpServlet {
         routeList.add(new Route(tripList));
       }
     }
-    cnxn.disconnect();
     response.getOutputStream().println(new Gson().toJson(routeList));
   }
 
@@ -90,34 +86,9 @@ public class RouteFinderServlet extends HttpServlet {
 	       (double) ((Map) step.get("distance")).get("value"),
 	       (double) ((Map) step.get("duration")).get("value"),
 	       20);  // unsure about departure time right now...
-
   }
 
   private LatLong locationMapToLatLong(Map<?, ?> map)	{
     return new LatLong((double) map.get("lat"), (double) map.get("lng"));
-  }
-
-  private Map<String, ?>  jsonStringToMap(String jsonString)	{
-    Gson gson = new Gson();
-    Map map = gson.fromJson(jsonString, Map.class);
-    return map;
-  }
-
-  private String getDirectionsLink(String startAddress, 
-		  String endAddress, String key)	{
-    return String.format(
-      "https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s",
-      startAddress.replace(' ', '+'), endAddress.replace(' ', '+'), key);
-  }
-
-  private String readOpenCnxn(HttpURLConnection cnxn) throws IOException	{
-    BufferedReader in = new BufferedReader(new InputStreamReader(cnxn.getInputStream()));
-    String inputLine;
-    StringBuffer content = new StringBuffer();
-    while ((inputLine = in.readLine()) != null)	{
-	    content.append(inputLine);
-    }
-    in.close();
-    return content.toString();
   }
 }
