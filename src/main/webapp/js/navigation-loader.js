@@ -31,11 +31,11 @@ function addLinksBasedOnLoginStatus() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createLink('/user-page.html?user=' + loginStatus.username, 'My Info'));
-          navigationElement.appendChild(createLink('/my-stats.html', 'My Dashboard'));
           navigationElement.appendChild(createLink('/map.html', 'New Trip'));
+          navigationElement.appendChild(createLink('/my-stats.html', 'My Dashboard'));
           navigationElement.appendChild(createLink('/feed.html', 'Messages'));
           navigationElement.appendChild(createLink('/community.html', 'Community'));
+          navigationElement.appendChild(createLink('/user-page.html?user=' + loginStatus.username, 'My Profile'));
           navigationElement.appendChild(createLink('/logout', 'Logout'));
         }
         else {
