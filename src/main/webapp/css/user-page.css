@@ -50,3 +50,7 @@
 .hidden {
   display: none;
 }
+
+.extra-bottom-margin {
+  margin-bottom: 15px;
+}
