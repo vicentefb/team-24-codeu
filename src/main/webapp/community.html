@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Community Page</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/css/site.css" rel="stylesheet">
+    <script src="/js/navigation-loader.js"></script>
     <script src="/js/community-page-loader.js"></script>
 </head>
-<body onload="buildUI()">
-<div id="content">
-    <h1>Community Page</h1>
-    <p>Here is a list of every user who has posted a message:</p>
-    <hr/>
-    <ul id="list">Loading...</ul>
-</div>
+
+<body onload="buildUI(); addLinksBasedOnLoginStatus();">
+    <div class="container-fluid">
+        <header>
+            <div>
+                <nav class="row nav nav-masthead justify-content-center" id="navigation">
+                    <a class="nav-link" href="/index.html">Home</a>
+                    <a class="nav-link" href="/aboutus.html">About Team 24</a>
+                    <a class="nav-link" href="/mission-page.html">Our Mission</a>
+                </nav>
+            </div>
+        </header>
+        <div id="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <br />
+                    <h1 class="title text-center">Community</h1>
+                    <p>Feature Goal: For this page to display users 
+                        of the site and give you the opportunity to challenge 
+                        people to different things, which is reflected in 
+                        My Dashboard through the Challenges Won stat and on the 
+                        maps page by showing how your chosen route might effect 
+                        your challenge progress!</p>
+                    <p>We want to create added incentives and friendly competition 
+                        between users to bolster user interaction and community 
+                        engagement.</p>
+                    <p>Here is a list of every user who has posted a message:</p>
+                    <hr />
+                    <ul id="list">Loading...</ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
