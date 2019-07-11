@@ -45,6 +45,7 @@ function showMessageFormIfViewingSelf() {
         }
         });
     document.getElementById('about-me-form').classList.remove('hidden');
+    document.getElementById('first-name-form').classList.remove('hidden');
 }
 
 /** Fetches messages and add them to the page. */
@@ -91,24 +92,50 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
-/** Uses the fetch() function to request the user's about data, and then adds it to the page. */
+/** Uses the fetch() function to request the user's about data, and then replaces the placeholder in the 
+ * input box
+ */
 function fetchAboutMe() {
     const url = '/about?user=' + parameterUsername;
     fetch(url).then((response) => {
-        return response.text();
-    }).then((aboutMe) => {
-        const aboutMeContainer = document.getElementById('about-me-container');
-        if (aboutMe == '') {
-            aboutMe = 'This user has not entered any information yet.';
+        return response.json();
+    }).then((myInfoJson) => {
+        const firstNameContainer = document.getElementById('first-name-input');
+        const aboutMeContainer = document.getElementById('about-me-input');
+
+
+        if(myInfoJson[0] != "") {
+          firstNameContainer.placeholder = myInfoJson[0];
         }
-        aboutMeContainer.innerHTML = aboutMe;
+
+        if(myInfoJson[6] != "") {
+          aboutMeContainer.placeholder = myInfoJson[6];
+        }
+
     });
 }
+
+/*
+function fetchFirstName() {
+    const url = '/firstName?user=' + parameterUsername;
+    fetch(url).then((response) => {
+      return response.text();
+    }).then((firstName) => {
+      const firstNameContainer = document.getElementById('first-name-input');
+      if(firstName != '') {
+        firstNameContainer.placeholder = firstName;
+      }
+    });
+}
+*/
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
   showMessageFormIfViewingSelf();
+  //FIXME: add function for disabling textboxes if viewing another person's page
   fetchMessages();
+
+  //fetchFirstName();
   fetchAboutMe();
 }
