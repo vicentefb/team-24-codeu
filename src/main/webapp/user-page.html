@@ -44,7 +44,7 @@ limitations under the License.
         <div class="row">
             <div class="col-md-12">
                 <br />
-                <h1 class="title text-center">My Profile</h1>
+                <h1 id="page-title" class="title text-center"></h1>
                 <br />
             </div>
         </div>
@@ -118,7 +118,7 @@ limitations under the License.
 
                 </div>
                 <div class="col-md-6">
-                    <input type="submit" value="Save Changes">
+                    <input id="submit-button" type="submit" value="Save Changes">
                 </div>
             </div>
         </form>
@@ -127,8 +127,6 @@ limitations under the License.
         <div>
             <div class="row">
                 <div class="col-md-12">
-                    <br />
-                    <h1 id="page-title" class="title text-center">User Page</h1>
                     <p>Feature Goal: We wanted to give users the opportunity to 
                         share a bio and send messages to the community. These messages 
                         could be about stat and challenge updates, but we want users 
@@ -136,7 +134,6 @@ limitations under the License.
                         to share good biking trails or sustainable living tips, for 
                         example. This level of community involvement is a reach feature 
                         should we have time to fully build it out.</p>
-                    <div id="about-me-container">Loading...</div>
 
                     <form id="message-form" action="/messages" method="POST" class="hidden">
                         Enter a new message:

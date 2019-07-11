@@ -23,16 +23,11 @@ if (!parameterUsername) {
   window.location.replace('/');
 }
 
-/** Sets the page title based on the URL parameter username. */
-function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
-  document.title = parameterUsername + ' - User Page';
-}
-
 /**
- * Shows the message form if the user is logged in and viewing their own page.
+ * Shows the message form if the user is logged in and viewing their own page, sets input data to 
+ * read only if viewing another user's page, removes hidden value from inputs
  */
-function showMessageFormIfViewingSelf() {
+function settingsIfViewingSelf() {
   fetch('/login-status')
       .then((response) => {
         return response.json();
@@ -42,6 +37,25 @@ function showMessageFormIfViewingSelf() {
             loginStatus.username == parameterUsername) {
           const messageForm = document.getElementById('message-form');
           messageForm.classList.remove('hidden');
+
+          //sets the page title
+          document.getElementById('page-title').innerText = "My Profile";
+          document.title = parameterUsername + ' - User Page';
+
+        } else {
+          document.getElementById('first-name-input').readOnly = true;
+          document.getElementById('last-name-input').readOnly = true;
+          document.getElementById('city-input').readOnly = true;
+          document.getElementById('state-province-input').readOnly = true;
+          document.getElementById('country-input').readOnly = true;
+          document.getElementById('email-input').readOnly = true;
+          document.getElementById('about-me-input').readOnly = true;
+
+          document.getElementById('submit-button').style.visibility = 'hidden';
+
+          //sets the page title for other users
+          document.getElementById('page-title').innerText = parameterUsername + "'s Profile";
+          document.title = parameterUsername + ' - User Page';
         }
       });
 
@@ -146,8 +160,7 @@ function fetchAboutMe() {
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-  setPageTitle();
-  showMessageFormIfViewingSelf();
+  settingsIfViewingSelf();
   //FIXME: add function for disabling textboxes if viewing another person's page
   fetchMessages();
   fetchAboutMe();
