@@ -48,20 +48,26 @@ public class AboutMeServlet extends HttpServlet {
     }
 
     User userData = datastore.getUser(user);
+
     if(userData == null) {
       return;
-    } else {
+    } 
+    else {
       ArrayList<String> userInfoJsonArray = new ArrayList<String>();
       
+      String firstName = userData.getFirstName();
+      Gson firstName_gson = new Gson();
+      String firstName_json = firstName_gson.toJson(firstName);
+      userInfoJsonArray.add(firstName_json);
+
+      //FIXME making changes....
+      /*
       if(userData.getFirstName() != null) {
-        String firstName = userData.getFirstName();
-        Gson firstName_gson = new Gson();
-        String firstName_json = firstName_gson.toJson(firstName);
-        userInfoJsonArray.add(firstName_json);
 
       } else {
         userInfoJsonArray.add("");
       }
+      */
 
       if(userData.getLastName() != null) {
         String lastName = userData.getLastName();
@@ -137,52 +143,106 @@ public class AboutMeServlet extends HttpServlet {
       return;
     }
 
+    //all fields in the user profile form
     String firstName;
     String lastName;
     String city;
     String stateProvince;
     String country;
-    String email;
+    String email = userService.getCurrentUser().getEmail();
     String aboutMe;
 
-    if(request.getParameter("first-name") != null) {
+    //retrieves what is currently in datastore and what the new input is
+    String currentFirstName = datastore.getUser(email).getFirstName();
+    String newInputFirstName = request.getParameter("first-name");
+
+    /*if the new input is different from what is stored AND the input isn't blank,
+     * the new input is saved
+     */ 
+    if(!(currentFirstName.equals(newInputFirstName)) && !(newInputFirstName.equals(""))) {
+      //there was new info entered, so it must be cleaned
       firstName = Jsoup.clean(request.getParameter("first-name"), Whitelist.none());
     } else {
-      firstName = "";
+      //no new info entered, keep what was already in datastore
+      firstName = currentFirstName;
     }
 
-    if(request.getParameter("last-name") != null) {
+    //retrieves what is currently in datastore and what the new input is
+    String currentLastName = datastore.getUser(email).getLastName();
+    String newInputLastName = request.getParameter("last-name");
+
+    /*if the new input is different from what is stored AND the input isn't blank,
+     * the new input is saved
+     */ 
+    if(!(currentLastName.equals(newInputLastName)) && !(newInputLastName.equals(""))) {
+      //there was new info entered, so it must be cleaned
       lastName = Jsoup.clean(request.getParameter("last-name"), Whitelist.none());
     } else {
-      lastName = "";
+      //no new info entered, keep what was already in datastore
+      lastName = currentLastName;
     }
 
-    if(request.getParameter("city") != null) {
+    //retrieves what is currently in datastore and what the new input is
+    String currentCity = datastore.getUser(email).getCity();
+    String newInputCity = request.getParameter("city");
+
+    /*if the new input is different from what is stored AND the input isn't blank,
+     * the new input is saved
+     */ 
+    if(!(currentCity.equals(newInputCity)) && !(newInputCity.equals(""))) {
+      //there was new info entered, so it must be cleaned
       city = Jsoup.clean(request.getParameter("city"), Whitelist.none());
     } else {
-      city = "";
+      //no new info entered, keep what was already in datastore
+      city = currentCity;
     }
 
-    if(request.getParameter("state-province") != null) {
+    //retrieves what is currently in datastore and what the new input is
+    String currentStateProvince = datastore.getUser(email).getStateProvince();
+    String newInputStateProvince = request.getParameter("state-province");
+
+    /*if the new input is different from what is stored AND the input isn't blank,
+     * the new input is saved
+     */ 
+    if(!(currentStateProvince.equals(newInputStateProvince)) && !(newInputStateProvince.equals(""))) {
+      //there was new info entered, so it must be cleaned
       stateProvince = Jsoup.clean(request.getParameter("state-province"), Whitelist.none());
     } else {
-      stateProvince = "";
+      //no new info entered, keep what was already in datastore
+      stateProvince = currentStateProvince;
     }
 
-    if(request.getParameter("country") != null) {
+    //retrieves what is currently in datastore and what the new input is
+    String currentCountry = datastore.getUser(email).getCountry();
+    String newInputCountry = request.getParameter("country");
+
+    /*if the new input is different from what is stored AND the input isn't blank,
+     * the new input is saved
+     */ 
+    if(!(currentCountry.equals(newInputCountry)) && !(newInputCountry.equals(""))) {
+      //there was new info entered, so it must be cleaned
       country = Jsoup.clean(request.getParameter("country"), Whitelist.none());
     } else {
-      country = "";
+      //no new info entered, keep what was already in datastore
+      country = currentCountry;
     }
 
-    email = userService.getCurrentUser().getEmail();
+    //retrieves what is currently in datastore and what the new input is
+    String currentAboutMe = datastore.getUser(email).getAboutMe();
+    String newInputAboutMe = request.getParameter("about-me");
 
-    if(request.getParameter("about-me") != null) {
+    /*if the new input is different from what is stored AND the input isn't blank,
+     * the new input is saved
+     */ 
+    if(!(currentAboutMe.equals(newInputAboutMe)) && !(newInputAboutMe.equals(""))) {
+      //there was new info entered, so it must be cleaned
       aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
     } else {
-      aboutMe = "";
+      //no new info entered, keep what was already in datastore
+      aboutMe = currentAboutMe;
     }
     
+    //updates User values
     User user = new User(firstName, lastName, city, stateProvince, country, email, aboutMe);
     datastore.storeUser(user);
 
