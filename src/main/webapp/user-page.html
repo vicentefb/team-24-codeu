@@ -59,35 +59,47 @@ limitations under the License.
                             <div class="row extra-bottom-margin">
                                 <div class="form-group col-md-6">
                                     <div id="first-name-form" class="hidden">
-                                        <input name="first-name" class="form-control" id="first-name-input" placeholder="First Name">
+                                        <input name="first-name" class="form-control" id="first-name-input"
+                                            placeholder="First Name">
                                     </div>
                                 </div>
         
                                 <div class="form-group col-md-6">
-                                    <input class="form-control" id="lastNameInput" placeholder="Last Name">
+                                    <div id="last-name-form" class="hidden">
+                                        <input name="last-name" class="form-control" id="last-name-input"
+                                            placeholder="Last Name">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row extra-bottom-margin">
                                 <div class="form-group col-md-4">
-                                    <input class="form-control" id="cityInput" placeholder="City">
+                                    <div id="city-form" class="hidden">
+                                        <input name="city" class="form-control" id="city-input" placeholder="City">
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <input class="form-control" id="stateProvinceInput" placeholder="State/Province">
+                                    <div id="state-province-form" class="hidden">
+                                        <input name="state-province" class="form-control" id="state-province-input" placeholder="State/Province">
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <input class="form-control" id="countryInput" placeholder="Country">
+                                    <div id="country-form" class="hidden">
+                                        <input name="country" class="form-control" id="country-input" placeholder="Country">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row extra-bottom-margin">
                                 <div class="form-group col-md-12">
-                                    <input type="email" class="form-control" id="emailInput" placeholder="Email">
+                                    <div id="email-form" class="hidden">
+                                        <input name="email" type="email" class="form-control" id="email-input" placeholder="Email">
+                                    </div>
                                 </div>
                             </div>
                         </div>
         
                         <div class="col-md-4">
                             <div class="row extra-bottom-margin">
-                                <img src="/css/default_profile_pic.png">
+                                <img class="profile-pic-size" src="/css/default_profile_pic.png">
                             </div>
                         </div>
                     </div>
@@ -101,7 +113,14 @@ limitations under the License.
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Save Changes">
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6">
+                    <input type="submit" value="Save Changes">
+                </div>
+            </div>
         </form>
 
         <!--OLD STUFF-->

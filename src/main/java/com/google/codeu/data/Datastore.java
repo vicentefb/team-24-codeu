@@ -38,7 +38,6 @@ public class Datastore {
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
     
-    
     userEntity.setProperty("firstName", user.getFirstName());
     userEntity.setProperty("lastName", user.getLastName());
     userEntity.setProperty("city", user.getCity());

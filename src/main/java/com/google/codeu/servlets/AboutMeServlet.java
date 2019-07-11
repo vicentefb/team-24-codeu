@@ -64,7 +64,7 @@ public class AboutMeServlet extends HttpServlet {
       }
 
       if(userData.getLastName() != null) {
-        String lastName = userData.getFirstName();
+        String lastName = userData.getLastName();
         Gson lastName_gson = new Gson();
         String lastName_json = lastName_gson.toJson(lastName);
         userInfoJsonArray.add(lastName_json);
@@ -104,7 +104,7 @@ public class AboutMeServlet extends HttpServlet {
       }
 
       if(userData.getEmail() != null) {
-        String email = userData.getCity();
+        String email = userData.getEmail();
         Gson email_gson = new Gson();
         String email_json = email_gson.toJson(email);
         userInfoJsonArray.add(email_json);
@@ -124,7 +124,6 @@ public class AboutMeServlet extends HttpServlet {
       }
       
       response.getWriter().println(userInfoJsonArray);
-      //response.getOutputStream().println(userInfoArray);
     }
   }
 

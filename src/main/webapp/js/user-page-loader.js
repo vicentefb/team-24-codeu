@@ -43,9 +43,15 @@ function showMessageFormIfViewingSelf() {
           const messageForm = document.getElementById('message-form');
           messageForm.classList.remove('hidden');
         }
-        });
-    document.getElementById('about-me-form').classList.remove('hidden');
+      });
+
     document.getElementById('first-name-form').classList.remove('hidden');
+    document.getElementById('last-name-form').classList.remove('hidden');
+    document.getElementById('city-form').classList.remove('hidden');
+    document.getElementById('state-province-form').classList.remove('hidden');
+    document.getElementById('country-form').classList.remove('hidden');
+    document.getElementById('email-form').classList.remove('hidden');
+    document.getElementById('about-me-form').classList.remove('hidden');
 }
 
 /** Fetches messages and add them to the page. */
@@ -101,33 +107,42 @@ function fetchAboutMe() {
         return response.json();
     }).then((myInfoJson) => {
         const firstNameContainer = document.getElementById('first-name-input');
+        const lastNameContainer = document.getElementById('last-name-input');
+        const cityContainer = document.getElementById('city-input');
+        const stateProvinceContainer = document.getElementById('state-province-input');
+        const countryContainer = document.getElementById('country-input');
+        const emailContainer = document.getElementById('email-input');
         const aboutMeContainer = document.getElementById('about-me-input');
-
 
         if(myInfoJson[0] != "") {
           firstNameContainer.placeholder = myInfoJson[0];
         }
 
+        if(myInfoJson[1] != "") {
+          lastNameContainer.placeholder = myInfoJson[1];
+        }
+
+        if(myInfoJson[2] != "") {
+          cityContainer.placeholder = myInfoJson[2];
+        }
+
+        if(myInfoJson[3] != "") {
+          stateProvinceContainer.placeholder = myInfoJson[3];
+        }
+
+        if(myInfoJson[4] != "") {
+          countryContainer.placeholder = myInfoJson[4];
+        }
+
+        if(myInfoJson[5] != "") {
+          emailContainer.placeholder = myInfoJson[5];
+        }
+
         if(myInfoJson[6] != "") {
           aboutMeContainer.placeholder = myInfoJson[6];
         }
-
     });
 }
-
-/*
-function fetchFirstName() {
-    const url = '/firstName?user=' + parameterUsername;
-    fetch(url).then((response) => {
-      return response.text();
-    }).then((firstName) => {
-      const firstNameContainer = document.getElementById('first-name-input');
-      if(firstName != '') {
-        firstNameContainer.placeholder = firstName;
-      }
-    });
-}
-*/
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
@@ -135,7 +150,5 @@ function buildUI() {
   showMessageFormIfViewingSelf();
   //FIXME: add function for disabling textboxes if viewing another person's page
   fetchMessages();
-
-  //fetchFirstName();
   fetchAboutMe();
 }
