@@ -127,6 +127,19 @@ limitations under the License.
 
             </div>
             <div class="col-md-6">
+                <form id="message-form" action="/messages" method="POST" class="hidden">
+                    <hr />
+                    <h3>Enter a new message:</h3>
+                    <textarea name="text" class="form-control" id="message-input" rows="3"></textarea>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
                 <hr />
                 <h3>Messages Posted:</h3>
                 <div id="message-container">Loading...</div>

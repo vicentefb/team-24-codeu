@@ -1,13 +1,13 @@
 package com.google.codeu.data;
 
 public class User {
-  private String firstName;
-  private String lastName;
-  private String city;
-  private String stateProvince;
-  private String country;
-  private String email;
-  private String aboutMe;
+  private String firstName = "";
+  private String lastName = "";
+  private String city = "";
+  private String stateProvince = "";
+  private String country = "";
+  private String email = "";
+  private String aboutMe = "";
 
 
   public User(String firstName, String lastName, String city, String stateProvince, String country, String email, String aboutMe) {

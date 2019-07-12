@@ -45,6 +45,7 @@ public class Datastore {
     userEntity.setProperty("country", user.getCountry());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
+
     datastore.put(userEntity);
   }
 
@@ -53,12 +54,11 @@ public class Datastore {
   * null if no matching User was found.
   */
   public User getUser(String email) {
-    Query query = new Query("User")
-      .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-	PreparedQuery results = datastore.prepare(query);
+    Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+	  PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
 
-	if(userEntity == null) {
+	  if(userEntity == null) {
       return null;
     }
 
@@ -84,6 +84,9 @@ public class Datastore {
 
     for(Entity entity : results.asIterable()) {
       users.add((String) entity.getProperty("user"));
+
+      //FIXME: remove later, using for debugging
+      System.out.println("user list: + " + (String) entity.getProperty("user"));
     }
 
     return users;

@@ -1,7 +1,7 @@
 package com.google.codeu.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -151,6 +151,9 @@ public class AboutMeServlet extends HttpServlet {
     String country;
     String email = userService.getCurrentUser().getEmail();
     String aboutMe;
+
+    //FIXME: remove later, using for debugging
+    Set<String> testing = datastore.getUsers();
 
     //retrieves what is currently in datastore and what the new input is
     String currentFirstName = datastore.getUser(email).getFirstName();
