@@ -24,6 +24,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.codeu.data.User;
 
 import java.util.*;
 
@@ -62,15 +63,50 @@ public class Datastore {
       return null;
     }
 
-    String firstName = (String) userEntity.getProperty("firstName");
-    String lastName = (String) userEntity.getProperty("lastName");
-    String city = (String) userEntity.getProperty("city");
-    String stateProvince = (String) userEntity.getProperty("stateProvince");
-    String country = (String) userEntity.getProperty("country");
-    String aboutMe = (String) userEntity.getProperty("aboutMe");
+    String firstName;
+    String lastName;
+    String city;
+    String stateProvince;
+    String country;
+    String aboutMe;
+
+    if(userEntity.getProperty("firstName") != null) {
+      firstName = (String) userEntity.getProperty("firstName");
+    } else {
+      firstName = "";
+    }
+
+    if(userEntity.getProperty("lastName") != null) {
+      lastName = (String) userEntity.getProperty("lastName");
+    } else {
+      lastName = "";
+    }
+
+    if(userEntity.getProperty("city") != null) {
+      city = (String) userEntity.getProperty("city");
+    } else {
+      city = "";
+    }
+
+    if(userEntity.getProperty("stateProvince") != null) {
+      stateProvince = (String) userEntity.getProperty("stateProvince");
+    } else {
+      stateProvince = "";
+    }
+
+    if(userEntity.getProperty("country") != null) {
+      country = (String) userEntity.getProperty("country");
+    } else {
+      country = "";
+    }
+
+    if(userEntity.getProperty("aboutMe") != null) {
+      aboutMe = (String) userEntity.getProperty("aboutMe");
+    } else {
+      aboutMe = "";
+    }
 
     User user = new User(firstName, lastName, city, stateProvince, country, email, aboutMe);
-
     return user;
   }
 
@@ -79,14 +115,11 @@ public class Datastore {
    */
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();
-    Query query = new Query("Message");
+    Query query = new Query("User");
     PreparedQuery results = datastore.prepare(query);
 
     for(Entity entity : results.asIterable()) {
-      users.add((String) entity.getProperty("user"));
-
-      //FIXME: remove later, using for debugging
-      System.out.println("user list: + " + (String) entity.getProperty("user"));
+      users.add((String) entity.getProperty("email"));
     }
 
     return users;

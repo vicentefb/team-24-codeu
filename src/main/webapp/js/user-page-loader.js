@@ -33,6 +33,9 @@ function settingsIfViewingSelf() {
         return response.json();
       })
       .then((loginStatus) => {
+        //email is always read-only and cannot be edited even if you're viewing your own page
+        document.getElementById('email-input').readOnly = true;
+
         if (loginStatus.isLoggedIn && 
           loginStatus.username == parameterUsername) { //this means the user is logged in and viewing their own profile page
 
@@ -51,7 +54,6 @@ function settingsIfViewingSelf() {
           document.getElementById('city-input').readOnly = true;
           document.getElementById('state-province-input').readOnly = true;
           document.getElementById('country-input').readOnly = true;
-          document.getElementById('email-input').readOnly = true;
           document.getElementById('about-me-input').readOnly = true;
 
           //removes the submit changes button

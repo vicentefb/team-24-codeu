@@ -54,20 +54,16 @@ public class AboutMeServlet extends HttpServlet {
     } 
     else {
       ArrayList<String> userInfoJsonArray = new ArrayList<String>();
-      
-      String firstName = userData.getFirstName();
-      Gson firstName_gson = new Gson();
-      String firstName_json = firstName_gson.toJson(firstName);
-      userInfoJsonArray.add(firstName_json);
 
-      //FIXME making changes....
-      /*
       if(userData.getFirstName() != null) {
+        String firstName = userData.getFirstName();
+        Gson firstName_gson = new Gson();
+        String firstName_json = firstName_gson.toJson(firstName);
+        userInfoJsonArray.add(firstName_json);
 
       } else {
         userInfoJsonArray.add("");
       }
-      */
 
       if(userData.getLastName() != null) {
         String lastName = userData.getLastName();
@@ -128,7 +124,7 @@ public class AboutMeServlet extends HttpServlet {
       } else {
         userInfoJsonArray.add("");
       }
-      
+
       response.getWriter().println(userInfoJsonArray);
     }
   }
