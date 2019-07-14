@@ -59,9 +59,10 @@ function initMap() {
 
     map.setCenter(place.geometry.location);
   });
+  /*
   document.getElementById('mode').addEventListener('change', function() {
     calculateAndDisplayRoute();
-  });
+  }); */
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -75,6 +76,12 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 // add data on how stats would be effected by route
 function calcAndDisplayStatEffect() {
    
+}
+
+// Preload function
+var trip;
+function preload(){
+    trip = loadJSON("file.json");
 }
 
 function calculateAndDisplayRoute() {
