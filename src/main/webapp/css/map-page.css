@@ -24,24 +24,24 @@ html, body {
 }
 
 /* the CSS for displaying the directions */
-#middle-panel {
+#bottom-right-panel {
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
 }
 
-#middle-panel select, #middle-panel input {
+#bottom-right-panel select, #bottom-right-panel input {
     font-size: 15px;
 }
 
-#middle-panel select {
+#bottom-right-panel select {
     width: 100%;
 }
 
-#middle-panel i {
+#bottom-right-panel i {
     font-size: 12px;
 }
-#middle-panel {
+#bottom-right-panel {
 height: 100%;
 float: right;
 width: 390px;
@@ -49,24 +49,24 @@ overflow: auto;
 }
 
 /* the CSS for displaying the panel that contains the collapsibles */
-#right-panel {
+#top-right-panel {
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
 }
 
-#right-panel select, #right-panel input {
+#top-right-panel select, #top-right-panel input {
     font-size: 15px;
 }
 
-#right-panel select {
+#top-right-panel select {
     width: 100%;
 }
 
-#right-panel i {
+#top-right-panel i {
     font-size: 12px;
 }
-#right-panel {
+#top-right-panel {
 height: 100%;
 float: right;
 width: 390px;
