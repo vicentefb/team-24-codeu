@@ -9,6 +9,8 @@ import com.google.codeu.data.Datastore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 
+import com.google.codeu.servlets.DatastoreHelper;
+
 /*
  * The purpose of this servlet is to retrieve the data needed for the emissions bar graph
  * on my-stats.html and calculate the amount of CO2 in terms of kilograms
@@ -16,19 +18,28 @@ import java.util.ArrayList;
 @WebServlet("/emissions")
 
 public class EmissionsServlet extends HttpServlet {
+    private Datastore datastore;
 
     @Override
     public void init() {
-        //datastore = new Datastore(); //implement when using Datastore
+        this.datastore = new Datastore();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
+	String userEmail = response.getRemoteUser();
+	HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
+        double totalKilos = 0;
+        double totalUnsustainableKilos = 0;
 
-        //FIXME: replace the following variables with real data from datastore
-        double totalMiles = 50.5;
-        double totalUnsustainableMiles = 18.1;
+	for (String key : transpToDist.keySet())  {
+		if (key == "DRIVING") totalUnsustainableKilos += transpToDist.get(key);
+		totalKilos += transpToDist.get(key);
+	}
+
+	double totalMiles = totalKilos / 1.609;
+	double totalUnsustainableMiles = totalUnsustainableKilos / 1.609;
         
         //the user's total unsustainable miles is multiplied by .404 to get amount of carbon in kg
         double actualEmissions = totalUnsustainableMiles * .404;
