@@ -52,6 +52,7 @@ public class RouteFinderServlet extends HttpServlet {
 
     String startAddress = request.getParameter("startAddress");
     String endAddress = request.getParameter("endAddress");
+    String user = request.getParameter("userEmail");
 
     if(startAddress == null || startAddress.equals("") ||
        endAddress == null || endAddress.equals("")) {
@@ -72,17 +73,20 @@ public class RouteFinderServlet extends HttpServlet {
         for (Map step : steps) {
 		tripList.add(stepToTrip(step));
 	}
-        routeList.add(new Route(tripList));
+        routeList.add(new Route(tripList, user));
       }
     }
+
+    datastore.storeRoute(routeList.get(0));  // stores the first route by default
     response.getOutputStream().println(new Gson().toJson(routeList));
   }
 
   private Trip stepToTrip(Map step)	{
     LatLong startLocation = locationMapToLatLong((Map) step.get("start_location"));
     LatLong endLocation = locationMapToLatLong((Map) step.get("end_location"));
+    System.out.println("Step travelmode " + step.get("travel_mode").toString());
     return new Trip(startLocation, endLocation,
-	       (String) step.get("travel_mode"), 
+	       (String) step.get("travel_mode").toString(), 
 	       (double) ((Map) step.get("distance")).get("value"),
 	       (double) ((Map) step.get("duration")).get("value"),
 	       20);  // unsure about departure time right now...

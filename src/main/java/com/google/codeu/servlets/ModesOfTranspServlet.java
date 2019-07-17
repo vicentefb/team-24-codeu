@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.codeu.data.Datastore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.google.codeu.data.Datastore;
+import com.google.codeu.data.Route;
+import com.google.codeu.data.Trip;
 
 /*
  * The purpose of this servlet is to retrieve the data needed for the modes of
@@ -17,9 +22,7 @@ import java.util.ArrayList;
 
 public class ModesOfTranspServlet extends HttpServlet {
 
-    @Override
-    public void init() {
-        //datastore = new Datastore(); //implement when using Datastore
+    public ModesOfTranspServlet()	{
     }
 
     private class TranspMode {
@@ -50,10 +53,30 @@ public class ModesOfTranspServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Datastore datastore = new Datastore();
         response.setContentType("application/json");
+	String userEmail = request.getRemoteUser();
+	System.out.println("userEmail " + userEmail);
 
-        //FIXME: replace the following variables with real data from datastore
+	HashMap<String, Double> totalTransp = new HashMap<String, Double>();
+
+	for (Route route : datastore.getRoutes(userEmail))	{
+		System.out.println("route.getUser " + route.getUser());
+		HashMap<String, Double> transpToDist = route.getTotalDistanceByTransportationMode();
+
+		for (String key : transpToDist.keySet())	{
+			double currDist = 0;
+			if (totalTransp.containsKey(key))	{
+				currDist = totalTransp.get(key);
+			}
+			totalTransp.put(key, currDist + transpToDist.get(key));
+		}
+	}
+
         ArrayList<TranspMode> modes = new ArrayList<TranspMode>();
+	for (String key : totalTransp.keySet())  {
+		modes.add(new TranspMode(key, totalTransp.get(key)));
+	}
         modes.add(new TranspMode("Walk", 14.5));
         modes.add(new TranspMode("Bike", 16.7));
         modes.add(new TranspMode("Scooter", 10.45));

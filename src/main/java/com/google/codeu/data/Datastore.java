@@ -24,8 +24,13 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Text;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.*;
+import java.lang.reflect.Type;
 
 public class Datastore {
   private DatastoreService datastore;
@@ -170,17 +175,37 @@ public class Datastore {
       (String) map.get("transportationMode"),
       (double) map.get("distanceTravelled"),
       (double) map.get("timeSpent"),
-      (int) map.get("departureTime"));
+      (double) map.get("departureTime"));
+  }
+
+  /** Stores the Route in Datastore. */
+  public void storeRoute(Route route) {
+    Entity routeEntity = new Entity("Route", route.getId().toString());
+    routeEntity.setProperty("user", route.getUser());
+    Text text = new Text(route.getRouteJson());
+    routeEntity.setProperty("tripList", text);
+    routeEntity.setProperty("timestamp", route.getTimestamp());
+    datastore.put(routeEntity);
   }
 
   /**
    * Given an entity, create and @return its corresponding route object.
    */
   private Route entityToRoute(Entity entity)  {
-    List<Map> tripMapList = (List<Map>) entity.getProperty("tripList");
+    Text text = (Text) entity.getProperty("tripList");
+    String tripListJson = text.getValue();
+
+    Gson gson = new Gson();
+    ArrayList<String> tripStrList = gson.fromJson(tripListJson, ArrayList.class);
+
     ArrayList<Trip> tripList = new ArrayList<Trip>();
-    for (Map tripMap : tripMapList) tripList.add(mapToTrip(tripMap));
-    return new Route(tripList);
+    for (String mapStr : tripStrList)  {
+	    Map map = (Map) gson.fromJson(mapStr, HashMap.class);
+	    tripList.add(mapToTrip(map));
+    }
+
+    String userEmail = (String) entity.getProperty("user");
+    return new Route(tripList, userEmail);
   }
 
   /**
@@ -219,7 +244,7 @@ public class Datastore {
           Query query = 
         	  new Query("Route")
         	    .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-        		.addSort("departureTime", SortDirection.DESCENDING);
+        		.addSort("timestamp", SortDirection.DESCENDING);
           PreparedQuery results = datastore.prepare(query);
           return getRouteList(results);
   }
