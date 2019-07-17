@@ -22,34 +22,67 @@ html, body {
     line-height: 30px;
     padding-left: 10px;
 }
-#right-panel {
+
+/* the CSS for displaying the directions */
+#bottom-right-panel {
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
 }
 
-#right-panel select, #right-panel input {
+#bottom-right-panel select, #bottom-right-panel input {
     font-size: 15px;
 }
 
-#right-panel select {
+#bottom-right-panel select {
     width: 100%;
 }
 
-#right-panel i {
+#bottom-right-panel i {
     font-size: 12px;
 }
-#right-panel {
+#bottom-right-panel {
 height: 100%;
 float: right;
 width: 390px;
 overflow: auto;
 }
 
+/* the CSS for displaying the panel that contains the collapsibles */
+#top-right-panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+#top-right-panel select, #top-right-panel input {
+    font-size: 15px;
+}
+
+#top-right-panel select {
+    width: 100%;
+}
+
+#top-right-panel i {
+    font-size: 12px;
+}
+#top-right-panel {
+height: 100%;
+float: right;
+width: 390px;
+overflow: auto;
+}
+
+/* so the dashboard effect info is only displayed after a route has been requested 
+via clicking the calc route button */
+#dashboard-info {
+    display: none;
+    }
+
 /* Style the button that is used to open and close the collapsible content */
 .collapsible {
-    background-color: #eee;
-    color: #444;
+    background-color: #97d378;
+    color: white;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -57,22 +90,37 @@ overflow: auto;
     text-align: left;
     outline: none;
     font-size: 15px;
-}
+  }
   
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+/* Add a background color to the button if it is clicked on (active) and when you hover */
 .active, .collapsible:hover {
-    background-color: #ccc;
-}
+    background-color: #79c753;
+  }
 
-/* Style the collapsible content. Note: hidden by default */
+/* Style the collapsible content */ 
 .content {
     padding: 0 18px;
-    display: none;
+    font-size: 15px;
+    max-height: 0;
     overflow: hidden;
-    background-color: #f1f1f1;
-    font-size: 14px; /* TOFIX: correct display */
+    transition: max-height 0.2s ease-out;
+    background-color: #e1f3d8;
 }
-
+  
+/* the next two are the "+" and "-" reactivity of the collapsible clicks */
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+  
+.active:after {
+    content: "\2212";
+}
+  
+/* map styling */
 #map {
     margin-right: 400px;
 }
