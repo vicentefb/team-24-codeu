@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.codeu.data.Datastore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.google.codeu.data.Datastore;
+import com.google.codeu.servlets.DatastoreHelper;
 
 /*
  * The purpose of this servlet is to retrieve the data needed for the four
@@ -16,10 +20,11 @@ import java.util.ArrayList;
 @WebServlet("/miniStats")
 
 public class MiniStatsServlet extends HttpServlet {
+    private Datastore datastore;
 
     @Override
     public void init() {
-        //datastore = new Datastore(); //implement when using Datastore
+        this.datastore = new Datastore();
     }
     
     //holds info for the miles donut chart
@@ -66,25 +71,50 @@ public class MiniStatsServlet extends HttpServlet {
         }
     }
 
+    public double getSustainableMiles(HashMap<String, Double> transpToDist)	{
+	    double sustainableKilos = 0;
+	    for (String key : transpToDist.keySet()) {
+		    if (key != "DRIVING") sustainableKilos += transpToDist.get(key);
+	    }
+	    return sustainableKilos / 1.609;
+    }
+
+    public String getMostUsedTransportationMode(HashMap<String, Double> transpToDist)	{
+	    String mostUsed = "None";
+	    double highestAmount = 0;
+	    double amount;
+	    for (String key : transpToDist.keySet())	{
+		   amount = transpToDist.get(key);
+		   if (amount > highestAmount)	{
+			   mostUsed = key;
+			   highestAmount = amount;
+		   }
+	    }
+	    return mostUsed;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
+	String userEmail = request.getRemoteUser();
 
-        //FIXME: replace the following variables with real data from datastore
+	DatastoreHelper helper = new DatastoreHelper(this.datastore);
+	HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
         
         //variables for first donut chart
-        double totalSustainableMiles = 34.3;
+        double totalSustainableMiles = getSustainableMiles(transpToDist);
         double totalSustainableMilesGoal = 50.5;
 
+	//FIXME: Not able to implement due to DepartureTime not being implemented correctly yet.
         //variables for second donut chart
         double totalSustainableHours = 7.5;
         double totalSustainableHoursGoal = 15.5;
 
         //variables for third donut chart
-        String favMode = "Bike";
-        double favModeMiles = 8.5;
+        String favMode = getMostUsedTransportationMode(transpToDist);
+        double favModeMiles = transpToDist.get(favMode);
 
-        //variables for fourth donut chart
+        //FIXME: Not able to implement due to Challenges not being implemented correctly yet.
         int totalChallengesWon = 1;
         int totalChallengesGoal = 5;
 
