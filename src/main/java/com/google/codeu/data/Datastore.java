@@ -70,41 +70,12 @@ public class Datastore {
     String country;
     String aboutMe;
 
-    if(userEntity.getProperty("firstName") != null) {
-      firstName = (String) userEntity.getProperty("firstName");
-    } else {
-      firstName = "";
-    }
-
-    if(userEntity.getProperty("lastName") != null) {
-      lastName = (String) userEntity.getProperty("lastName");
-    } else {
-      lastName = "";
-    }
-
-    if(userEntity.getProperty("city") != null) {
-      city = (String) userEntity.getProperty("city");
-    } else {
-      city = "";
-    }
-
-    if(userEntity.getProperty("stateProvince") != null) {
-      stateProvince = (String) userEntity.getProperty("stateProvince");
-    } else {
-      stateProvince = "";
-    }
-
-    if(userEntity.getProperty("country") != null) {
-      country = (String) userEntity.getProperty("country");
-    } else {
-      country = "";
-    }
-
-    if(userEntity.getProperty("aboutMe") != null) {
-      aboutMe = (String) userEntity.getProperty("aboutMe");
-    } else {
-      aboutMe = "";
-    }
+    firstName = (String) userEntity.getProperty("firstName");
+    lastName = (String) userEntity.getProperty("lastName");
+    city = (String) userEntity.getProperty("city");
+    stateProvince = (String) userEntity.getProperty("stateProvince");
+    country = (String) userEntity.getProperty("country");
+    aboutMe = (String) userEntity.getProperty("aboutMe");
 
     User user = new User(firstName, lastName, city, stateProvince, country, email, aboutMe);
     return user;
