@@ -91,7 +91,9 @@ public class RouteFinderServlet extends HttpServlet {
 	       20);  // unsure about departure time right now...
   }
 
-  private LatLong locationMapToLatLong(Map<?, ?> map)	{
-    return new LatLong((double) map.get("lat"), (double) map.get("lng"));
+  private LatLong locationMapToLatLong(Map<String, Double> map)	{
+    double latval = map.get("lat");
+    double longval = map.get("long");
+    return new LatLong(latval, longval);
   }
 }
