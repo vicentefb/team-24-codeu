@@ -1,5 +1,7 @@
 package com.google.codeu.data;
 
+import com.google.gson.Gson;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -15,10 +17,10 @@ public class Trip	{
 	private String transportationMode;
 	private double distanceTravelled;
 	private double timeSpent;
-	private int departureTime;
+	private double departureTime;
 
 	public Trip(LatLong startLocation, LatLong endLocation, String transportationMode,
-			double distanceTravelled, double timeSpent, int departureTime)	{
+			double distanceTravelled, double timeSpent, double departureTime)	{
 		this.startLocation = startLocation;
 		this.endLocation = endLocation;
 		this.transportationMode = transportationMode;
@@ -47,14 +49,20 @@ public class Trip	{
 		return timeSpent;
 	}
 
-	public int getDepartureTime()	{
+	public double getDepartureTime()	{
 		return departureTime;
+	}
+
+	public String toJson()	{
+		Gson gson = new Gson();
+		return gson.toJson(this.asMap());
 	}
 
 	public Map<List, ?> asMap()	{
 		HashMap map = new HashMap();
 		map.put("startLocation", startLocation.asMap());
 		map.put("endLocation", endLocation.asMap());
+		map.put("transportationMode", transportationMode);
 		map.put("distanceTravelled", distanceTravelled);
 		map.put("timeSpent", timeSpent);
 		map.put("departureTime", departureTime);
