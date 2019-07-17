@@ -58,7 +58,11 @@ function initMap() {
         window.alert("Select an option.");
         return;
       }
-
+// add data on how stats would be effected by route 
+// and display after calc route button is clicked
+function calcAndDisplayStatEffect(id, visibility) {
+  document.getElementById(id).style.display = visibility;   
+}
       map.setCenter(place.geometry.location);
     });
 }
@@ -124,9 +128,6 @@ function rainbow(numOfSteps, step) {
     return (c);
 }
 
-
-
-
 function renderDirectionsPolylines(response) {
   var bounds = new google.maps.LatLngBounds();
   for (var i = 0; i < polylines.length; i++) {
@@ -157,4 +158,15 @@ function renderDirectionsPolylines(response) {
     }
   }
   map.fitBounds(bounds);
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+
 }

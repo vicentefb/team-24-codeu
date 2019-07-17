@@ -24,8 +24,13 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Text;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.*;
+import java.lang.reflect.Type;
 
 public class Datastore {
   private DatastoreService datastore;
@@ -160,18 +165,47 @@ public class Datastore {
     return results.countEntities(FetchOptions.Builder.withLimit(1000));
   }
 
+  private LatLong mapToLatLong(Map map)  {
+    return new LatLong((double) map.get("lat"), (double) map.get("long"));
+  }
+
+  private Trip mapToTrip(Map map)  {
+    return new Trip(mapToLatLong((Map) map.get("startLocation")),
+      mapToLatLong((Map) map.get("endLocation")),
+      (String) map.get("transportationMode"),
+      (double) map.get("distanceTravelled"),
+      (double) map.get("timeSpent"),
+      (double) map.get("departureTime"));
+  }
+
+  /** Stores the Route in Datastore. */
+  public void storeRoute(Route route) {
+    Entity routeEntity = new Entity("Route", route.getId().toString());
+    routeEntity.setProperty("user", route.getUser());
+    Text text = new Text(route.getRouteJson());
+    routeEntity.setProperty("tripList", text);
+    routeEntity.setProperty("timestamp", route.getTimestamp());
+    datastore.put(routeEntity);
+  }
+
   /**
    * Given an entity, create and @return its corresponding route object.
    */
   private Route entityToRoute(Entity entity)  {
-    String idString = entity.getKey().getName();
-    UUID id = UUID.fromString(idString);
-    List<String> addressList = (List<String>) entity.getProperty("addressList");
-    float distanceTravelled = (float) entity.getProperty("distanceTravelled");
-    float departureTime = (float) entity.getProperty("departureTime");
-    float timeSpent = (float) entity.getProperty("timeSpent");
+    Text text = (Text) entity.getProperty("tripList");
+    String tripListJson = text.getValue();
 
-    return new Route(addressList, distanceTravelled, departureTime, timeSpent);
+    Gson gson = new Gson();
+    ArrayList<String> tripStrList = gson.fromJson(tripListJson, ArrayList.class);
+
+    ArrayList<Trip> tripList = new ArrayList<Trip>();
+    for (String mapStr : tripStrList)  {
+	    Map map = (Map) gson.fromJson(mapStr, HashMap.class);
+	    tripList.add(mapToTrip(map));
+    }
+
+    String userEmail = (String) entity.getProperty("user");
+    return new Route(tripList, userEmail);
   }
 
   /**
@@ -180,18 +214,18 @@ public class Datastore {
    * @return the correpsonding route list.
    */
   private List<Route> getRouteList(PreparedQuery results)  {
-	  List<Route> routes = new ArrayList<>();
-	  for (Entity entity : results.asIterable())  {
-		  try  {
-			  Route route = entityToRoute(entity);
-			  routes.add(route);
-		  } catch (Exception e)  {
-			  System.err.println("Error reading route.");
-			  System.err.println(entity.toString());
-			  e.printStackTrace();
-		  }
-	  }
-	  return routes;
+          List<Route> routes = new ArrayList<>();
+          for (Entity entity : results.asIterable())  {
+        	  try  {
+        		  Route route = entityToRoute(entity);
+        		  routes.add(route);
+        	  } catch (Exception e)  {
+        		  System.err.println("Error reading route.");
+        		  System.err.println(entity.toString());
+        		  e.printStackTrace();
+        	  }
+          }
+          return routes;
   }
 
   /**
@@ -199,19 +233,19 @@ public class Datastore {
    */
   public List<Route> getAllRoutes()	{
     Query query = new Query("Route").addSort("departureTime", SortDirection.DESCENDING);
-	PreparedQuery results = datastore.prepare(query);
-	return getRouteList(results);
+        PreparedQuery results = datastore.prepare(query);
+        return getRouteList(results);
   }
 
   /**
    * Gets all routes used by a specific user.
    */
   public List<Route> getRoutes(String user)	{
-	  Query query = 
-		  new Query("Route")
-		    .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-			.addSort("departureTime", SortDirection.DESCENDING);
-	  PreparedQuery results = datastore.prepare(query);
-	  return getRouteList(results);
+          Query query = 
+        	  new Query("Route")
+        	    .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+        		.addSort("timestamp", SortDirection.DESCENDING);
+          PreparedQuery results = datastore.prepare(query);
+          return getRouteList(results);
   }
 }
