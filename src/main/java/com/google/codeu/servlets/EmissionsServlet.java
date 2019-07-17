@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.codeu.data.Datastore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.codeu.servlets.DatastoreHelper;
 
@@ -28,15 +29,14 @@ public class EmissionsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-	String userEmail = response.getRemoteUser();
+	String userEmail = request.getRemoteUser();
+	DatastoreHelper helper = new DatastoreHelper(this.datastore);
 	HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
         double totalKilos = 0;
-        double totalUnsustainableKilos = 0;
+        double totalUnsustainableKilos = transpToDist.get("DRIVING");
 
-	for (String key : transpToDist.keySet())  {
-		if (key == "DRIVING") totalUnsustainableKilos += transpToDist.get(key);
-		totalKilos += transpToDist.get(key);
-	}
+	for (String key : transpToDist.keySet()) totalKilos += transpToDist.get(key);
+	
 
 	double totalMiles = totalKilos / 1.609;
 	double totalUnsustainableMiles = totalUnsustainableKilos / 1.609;
