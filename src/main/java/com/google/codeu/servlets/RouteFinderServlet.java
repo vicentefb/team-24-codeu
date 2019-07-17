@@ -77,7 +77,6 @@ public class RouteFinderServlet extends HttpServlet {
       }
     }
 
-    datastore.storeRoute(routeList.get(0));  // stores the first route by default
     response.getOutputStream().println(new Gson().toJson(routeList));
   }
 
