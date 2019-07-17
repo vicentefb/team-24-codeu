@@ -4,11 +4,11 @@
     height: 100%;
 }
 /* Optional: Makes the sample page fill the window. */
-html, body {
+/*html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
+}*/
 #floating-panel {
     position: absolute;
     top: 10px;
@@ -28,6 +28,10 @@ html, body {
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
+    height: 100Q%;
+    float: right;
+    width: 390px;
+    overflow: auto;
 }
 
 #bottom-right-panel select, #bottom-right-panel input {
@@ -41,6 +45,7 @@ html, body {
 #bottom-right-panel i {
     font-size: 12px;
 }
+
 #bottom-right-panel {
 height: 100%;
 float: right;
@@ -132,14 +137,4 @@ via clicking the calc route button */
     border: 1px solid #ccc;
     box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
     display: none;
-}
-@media print {
-    #map {
-      height: 500px;
-      margin: 0;
-    }
-    #right-panel {
-      float: none;
-      width: auto;
-    }
 }
