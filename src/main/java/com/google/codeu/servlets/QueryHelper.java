@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class QueryHelper  {
   private String apiKey;
-  private final String queryFormattedLink = "https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s";
+  private final String queryFormattedLink = "https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&key=%s&units=metric";
   
   public QueryHelper(String key)  {
     apiKey = key;
