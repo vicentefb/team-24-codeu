@@ -23,27 +23,55 @@ if (!parameterUsername) {
   window.location.replace('/');
 }
 
-/** Sets the page title based on the URL parameter username. */
-function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
-  document.title = parameterUsername + ' - User Page';
-}
-
 /**
- * Shows the message form if the user is logged in and viewing their own page.
+ * Shows the message form if the user is logged in and viewing their own page, sets input data to 
+ * read only if viewing another user's page, removes hidden value from inputs
  */
-function showMessageFormIfViewingSelf() {
+function settingsIfViewingSelf() {
   fetch('/login-status')
       .then((response) => {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn &&
-            loginStatus.username == parameterUsername) {
+        //email is always read-only and cannot be edited even if you're viewing your own page
+        document.getElementById('email-input').readOnly = true;
+
+        if (loginStatus.isLoggedIn && 
+          loginStatus.username == parameterUsername) { //this means the user is logged in and viewing their own profile page
+
           const messageForm = document.getElementById('message-form');
           messageForm.classList.remove('hidden');
+
+          //sets the page header
+          document.getElementById('page-title').innerText = "My Profile";
+          document.title = parameterUsername + ' - User Page';
+
+        } else { //this means the user is viewing another user's profile page
+
+          //sets all of the input fields to readOnly, so that they can't be edited
+          document.getElementById('first-name-input').readOnly = true;
+          document.getElementById('last-name-input').readOnly = true;
+          document.getElementById('city-input').readOnly = true;
+          document.getElementById('state-province-input').readOnly = true;
+          document.getElementById('country-input').readOnly = true;
+          document.getElementById('about-me-input').readOnly = true;
+
+          //removes the submit changes button
+          document.getElementById('submit-button').style.visibility = 'hidden';
+
+          //sets the page title to list the other user's email 
+          document.getElementById('page-title').innerText = parameterUsername + "'s Profile";
+          document.title = parameterUsername + ' - User Page';
         }
-        });
+      });
+
+    //removes the hidden attributes from the input boxes  
+    document.getElementById('first-name-form').classList.remove('hidden');
+    document.getElementById('last-name-form').classList.remove('hidden');
+    document.getElementById('city-form').classList.remove('hidden');
+    document.getElementById('state-province-form').classList.remove('hidden');
+    document.getElementById('country-form').classList.remove('hidden');
+    document.getElementById('email-form').classList.remove('hidden');
     document.getElementById('about-me-form').classList.remove('hidden');
 }
 
@@ -91,24 +119,62 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
-/** Uses the fetch() function to request the user's about data, and then adds it to the page. */
+/** Uses the fetch() function to request the user's about data, and then replaces the placeholder in the 
+ * input box
+ */
 function fetchAboutMe() {
     const url = '/about?user=' + parameterUsername;
     fetch(url).then((response) => {
-        return response.text();
-    }).then((aboutMe) => {
-        const aboutMeContainer = document.getElementById('about-me-container');
-        if (aboutMe == '') {
-            aboutMe = 'This user has not entered any information yet.';
+        return response.json();
+    }).then((myInfoJson) => {
+        //retrieves all of the input containers on the profile page
+        const firstNameContainer = document.getElementById('first-name-input');
+        const lastNameContainer = document.getElementById('last-name-input');
+        const cityContainer = document.getElementById('city-input');
+        const stateProvinceContainer = document.getElementById('state-province-input');
+        const countryContainer = document.getElementById('country-input');
+        const emailContainer = document.getElementById('email-input');
+        const aboutMeContainer = document.getElementById('about-me-input');
+
+        /* the following statements go through each index in myInfoJson in order of the 
+         * textboxes on the page, and if it is blank (meaning no info from user), the 
+         * placeholder is kept at the default value, but if there is input from the 
+         * user, that information becomes the new placeholder so the user can see what 
+         * they have on their profile
+         */ 
+        if(myInfoJson[0] != "") {
+          firstNameContainer.placeholder = myInfoJson[0];
         }
-        aboutMeContainer.innerHTML = aboutMe;
+
+        if(myInfoJson[1] != "") {
+          lastNameContainer.placeholder = myInfoJson[1];
+        }
+
+        if(myInfoJson[2] != "") {
+          cityContainer.placeholder = myInfoJson[2];
+        }
+
+        if(myInfoJson[3] != "") {
+          stateProvinceContainer.placeholder = myInfoJson[3];
+        }
+
+        if(myInfoJson[4] != "") {
+          countryContainer.placeholder = myInfoJson[4];
+        }
+
+        if(myInfoJson[5] != "") {
+          emailContainer.placeholder = myInfoJson[5];
+        }
+
+        if(myInfoJson[6] != "") {
+          aboutMeContainer.placeholder = myInfoJson[6];
+        }
     });
 }
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
-  setPageTitle();
-  showMessageFormIfViewingSelf();
+  settingsIfViewingSelf();
   fetchMessages();
   fetchAboutMe();
 }

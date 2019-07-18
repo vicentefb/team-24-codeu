@@ -18,11 +18,12 @@ limitations under the License.
 <html>
 
 <head>
-    <title>My Info</title>
+    <title>My Profile</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="/css/site.css" rel="stylesheet">
+    <link href="/css/user-page.css" rel="stylesheet">
     <script src="/js/navigation-loader.js"></script>
     <script src="/js/user-page-loader.js"></script>
 </head>
@@ -38,30 +39,117 @@ limitations under the License.
                 </nav>
             </div>
         </header>
+
+        <!--NEW STUFF-->
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <h1 id="page-title" class="title text-center"></h1>
+                <br />
+            </div>
+        </div>
+        <form action="/about" method="POST">
+            <div class="row">
+                <div class="col-md-3">
+        
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row extra-bottom-margin">
+                                <div class="form-group col-md-6">
+                                    <div id="first-name-form" class="hidden">
+                                        <input name="first-name" class="form-control" id="first-name-input"
+                                            placeholder="First Name">
+                                    </div>
+                                </div>
+        
+                                <div class="form-group col-md-6">
+                                    <div id="last-name-form" class="hidden">
+                                        <input name="last-name" class="form-control" id="last-name-input"
+                                            placeholder="Last Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row extra-bottom-margin">
+                                <div class="form-group col-md-4">
+                                    <div id="city-form" class="hidden">
+                                        <input name="city" class="form-control" id="city-input" placeholder="City">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div id="state-province-form" class="hidden">
+                                        <input name="state-province" class="form-control" id="state-province-input" placeholder="State/Province">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div id="country-form" class="hidden">
+                                        <input name="country" class="form-control" id="country-input" placeholder="Country">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row extra-bottom-margin">
+                                <div class="form-group col-md-12">
+                                    <div id="email-form" class="hidden">
+                                        <input name="email" type="email" class="form-control" id="email-input" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-md-4">
+                            <div class="row extra-bottom-margin">
+                                <img class="profile-pic-size" src="/css/default_profile_pic.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div id="about-me-form" class="hidden">
+                                <textarea name="about-me" class="form-control" id="about-me-input" rows="3"
+                                    placeholder="About Me"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6">
+                    <input id="submit-button" type="submit" value="Save Changes">
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+                <form id="message-form" action="/messages" method="POST" class="hidden">
+                    <hr />
+                    <h3>Enter a new message:</h3>
+                    <textarea name="text" class="form-control" id="message-input" rows="3"></textarea>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6">
+                <hr />
+                <h3>Messages Posted:</h3>
+                <div id="message-container">Loading...</div>
+            </div>
+        </div>
+
+        <!--OLD STUFF-->
         <div>
             <div class="row">
                 <div class="col-md-12">
-                    <br />
-                    <h1 id="page-title" class="title text-center">User Page</h1>
-                    <p>Feature Goal: We wanted to give users the opportunity to 
-                        share a bio and send messages to the community. These messages 
-                        could be about stat and challenge updates, but we want users 
-                        to eventually have a supported plateform via the Messages page 
-                        to share good biking trails or sustainable living tips, for 
-                        example. This level of community involvement is a reach feature 
-                        should we have time to fully build it out.</p>
-                    <div id="about-me-container">Loading...</div>
-                    <div id="about-me-form" class="hidden">
-                        <form action="/about" method="POST">
-                            <textarea name="about-me" id="about-me-input" placeholder="about me" rows=4
-                                required></textarea>
-                            <br />
-                            <input type="submit" value="Submit">
-                            <br />
-                            <br />
-                        </form>
-                    </div>
-
                     <form id="message-form" action="/messages" method="POST" class="hidden">
                         Enter a new message:
                         <br />
@@ -70,8 +158,6 @@ limitations under the License.
                         <input type="submit" value="Submit">
                     </form>
                     <hr />
-
-                    <div id="message-container">Loading...</div>
                 </div>
             </div>
         </div>

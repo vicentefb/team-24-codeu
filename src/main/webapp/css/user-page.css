@@ -50,3 +50,12 @@
 .hidden {
   display: none;
 }
+
+.extra-bottom-margin {
+  margin-bottom: 15px;
+}
+
+.profile-pic-size {
+  height: 11.5vw;
+  width: 15vw;
+}

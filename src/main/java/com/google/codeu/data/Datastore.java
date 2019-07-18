@@ -25,7 +25,6 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Text;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -42,8 +41,15 @@ public class Datastore {
   /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
+    
+    userEntity.setProperty("firstName", user.getFirstName());
+    userEntity.setProperty("lastName", user.getLastName());
+    userEntity.setProperty("city", user.getCity());
+    userEntity.setProperty("stateProvince", user.getStateProvince());
+    userEntity.setProperty("country", user.getCountry());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("aboutMe", user.getAboutMe());
+
     datastore.put(userEntity);
   }
 
@@ -52,18 +58,29 @@ public class Datastore {
   * null if no matching User was found.
   */
   public User getUser(String email) {
-    Query query = new Query("User")
-      .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-	PreparedQuery results = datastore.prepare(query);
+    Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+	  PreparedQuery results = datastore.prepare(query);
     Entity userEntity = results.asSingleEntity();
 
-	if(userEntity == null) {
+	  if(userEntity == null) {
       return null;
     }
 
-    String aboutMe = (String) userEntity.getProperty("aboutMe");
-    User user = new User(email, aboutMe);
+    String firstName;
+    String lastName;
+    String city;
+    String stateProvince;
+    String country;
+    String aboutMe;
 
+    firstName = (String) userEntity.getProperty("firstName");
+    lastName = (String) userEntity.getProperty("lastName");
+    city = (String) userEntity.getProperty("city");
+    stateProvince = (String) userEntity.getProperty("stateProvince");
+    country = (String) userEntity.getProperty("country");
+    aboutMe = (String) userEntity.getProperty("aboutMe");
+
+    User user = new User(firstName, lastName, city, stateProvince, country, email, aboutMe);
     return user;
   }
 
@@ -72,11 +89,11 @@ public class Datastore {
    */
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();
-    Query query = new Query("Message");
+    Query query = new Query("User");
     PreparedQuery results = datastore.prepare(query);
 
     for(Entity entity : results.asIterable()) {
-      users.add((String) entity.getProperty("user"));
+      users.add((String) entity.getProperty("email"));
     }
 
     return users;
