@@ -9,6 +9,7 @@
     margin: 0;
     padding: 0;
 }*/
+
 #floating-panel {
     position: absolute;
     top: 10px;
@@ -28,7 +29,7 @@
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
-    height: 100Q%;
+    height: 400px;
     float: right;
     width: 390px;
     overflow: auto;
@@ -46,18 +47,15 @@
     font-size: 12px;
 }
 
-#bottom-right-panel {
-height: 100%;
-float: right;
-width: 390px;
-overflow: auto;
-}
-
 /* the CSS for displaying the panel that contains the collapsibles */
 #top-right-panel {
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
+    height: 100%;
+    float: right;
+    width: 390px;
+    overflow: auto;
 }
 
 #top-right-panel select, #top-right-panel input {
@@ -70,12 +68,6 @@ overflow: auto;
 
 #top-right-panel i {
     font-size: 12px;
-}
-#top-right-panel {
-height: 100%;
-float: right;
-width: 390px;
-overflow: auto;
 }
 
 /* so the dashboard effect info is only displayed after a route has been requested 
