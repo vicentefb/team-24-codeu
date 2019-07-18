@@ -112,7 +112,10 @@ public class MiniStatsServlet extends HttpServlet {
 
         //variables for third donut chart
         String favMode = getMostUsedTransportationMode(transpToDist);
-        double favModeMiles = transpToDist.get(favMode);
+        double favModeMiles = 0;
+	if (transpToDist.containsKey(favMode))	{
+		transpToDist.get(favMode);
+	}
 
         //FIXME: Not able to implement due to Challenges not being implemented correctly yet.
         int totalChallengesWon = 1;
