@@ -33,7 +33,10 @@ public class EmissionsServlet extends HttpServlet {
 	DatastoreHelper helper = new DatastoreHelper(this.datastore);
 	HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
         double totalKilos = 0;
-        double totalUnsustainableKilos = transpToDist.get("DRIVING");
+        double totalUnsustainableKilos = 0;
+	if (transpToDist.containsKey("DRIVING"))	{
+		totalUnsustainableKilos = transpToDist.get("DRIVING");
+	}
 
 	for (String key : transpToDist.keySet()) totalKilos += transpToDist.get(key);
 	
