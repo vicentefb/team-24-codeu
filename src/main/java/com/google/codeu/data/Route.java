@@ -1,37 +1,68 @@
 package com.google.codeu.data;
 
+import com.google.gson.Gson;
+
+import com.google.codeu.data.Trip;
+
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 /** 
  * All timestamps are unix epoch time.
  */
 public class Route	{
-	private List<String> addressList;
-	private float distanceTravelled;
-	private float departureTime;
-	private float timeSpent;
+  private UUID id;
+  private String user;
+  private List<Trip> tripList;
+  private long timestamp;
 
-	public Route(List<String> addressList, float distanceTravelled, 
-				 float departureTime, float timeSpent)	{
-		this.addressList = addressList;
-		this.distanceTravelled = distanceTravelled;
-		this.departureTime = departureTime;
-		this.timeSpent = timeSpent;
-	}
+  public Route(List<Trip> tripList, String user)  {
+	  this(UUID.randomUUID(), user, tripList, System.currentTimeMillis());
+  }
 
-	public List<String> getAddressList()	{
-		return addressList;
-	}
+  public Route(UUID id, String user, List<Trip> tripList, long timestamp)	{
+	  this.id = id;
+	  this.user = user;
+	  this.tripList = tripList;
+	  this.timestamp = timestamp;
+  }
 
-	public float getDistanceTravelled()	{
-	   return distanceTravelled;
-	}
+  public UUID getId()  {
+    return this.id;
+  }
 
-	public float getDepartureTime()	{
-		return 	departureTime;
-	}
-	
-	public float getTimeSpent()	{
-		return timeSpent;
-	}
+  public String getUser()  {
+    return this.user;
+  }
+
+  public long getTimestamp()  {
+    return this.timestamp;
+  }
+
+  public String getRouteJson()  {
+    Gson gson = new Gson();
+    ArrayList<String> tripJsonList = new ArrayList<String>();
+    for (Trip trip : this.tripList)  {
+      tripJsonList.add(trip.toJson());
+    }
+    return gson.toJson(tripJsonList);
+  }
+
+  public HashMap<String, Double> getTotalDistanceByTransportationMode()	{
+    HashMap<String, Double> transModeToDist = new HashMap<String, Double>();
+    for (Trip trip : this.tripList)	{
+      double currDist = 0;
+      String mode = trip.getTransportationMode();
+      if (transModeToDist.containsKey(mode))  {
+        currDist = transModeToDist.get(mode);
+      }
+      transModeToDist.put(mode, currDist + trip.getDistanceTravelled());
+    }
+    return transModeToDist;
+  }
+  public List<Trip> asList()	{
+    return this.tripList;
+  }
 }
