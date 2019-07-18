@@ -54,17 +54,21 @@ public class RouteFinderServlet extends HttpServlet {
     String endAddress = request.getParameter("endAddress");
     String user = request.getParameter("userEmail");
 
-    if(startAddress == null || startAddress.equals("") ||
+    if (startAddress == null || startAddress.equals("") ||
        endAddress == null || endAddress.equals("")) {
       response.getOutputStream().println("ERROR! One address is either null or empty.");
     }
 
-    String key = "YOUR_API_KEY_HERE";
+    String key = "AIzaSyDie7L-I-7ytTG6AiByhJefoF5Lp1B3YHs";
     QueryHelper queryHelper = new QueryHelper(key);
-    List<Route> routeList = new ArrayList<Route>();
-    Trip someTrip;
     Map directionsResult = queryHelper.mapApiCall(startAddress, endAddress);
+    List<Route> routeList = directionsResultToRouteList(directionsResult, user);
+    response.getOutputStream().println(new Gson().toJson(routeList));
+  }
 
+  public List<Route> directionsResultToRouteList(Map<String, ?> directionsResult, String user)	{
+    Trip someTrip;
+    List<Route> routeList = new ArrayList<Route>();
     for (Map route : (ArrayList<Map>) directionsResult.get("routes"))  {
       for (Map leg : (ArrayList<Map>) route.get("legs"))  {
         ArrayList<Map> steps = (ArrayList<Map>) leg.get("steps");
@@ -76,8 +80,7 @@ public class RouteFinderServlet extends HttpServlet {
         routeList.add(new Route(tripList, user));
       }
     }
-
-    response.getOutputStream().println(new Gson().toJson(routeList));
+    return routeList;
   }
 
   private Trip stepToTrip(Map step)	{
@@ -93,7 +96,7 @@ public class RouteFinderServlet extends HttpServlet {
 
   private LatLong locationMapToLatLong(Map<String, Double> map)	{
     double latval = map.get("lat");
-    double longval = map.get("long");
+    double longval = map.get("lng");
     return new LatLong(latval, longval);
   }
 }
