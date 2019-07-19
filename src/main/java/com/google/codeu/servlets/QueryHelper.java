@@ -52,7 +52,7 @@ public class QueryHelper  {
     return content.toString();
   }
 
-  private Map<String, ?>  jsonStringToMap(String jsonString)	{
+  public Map<String, ?>  jsonStringToMap(String jsonString)	{
     Gson gson = new Gson();
     Map map = gson.fromJson(jsonString, Map.class);
     return map;
