@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="/css/site.css" rel="stylesheet">
+  <link href="/css/user-page.css" rel="stylesheet">
   <script src="/js/navigation-loader.js"></script>
 
   <script>
@@ -72,8 +73,7 @@
       <div>
         <nav class="row nav nav-masthead justify-content-center" id="navigation">
           <a class="nav-link" href="/index.html">Home</a>
-          <a class="nav-link" href="/aboutus.html">About Team 24</a>
-          <a class="nav-link" href="/mission-page.html">Our Mission</a>
+          <a class="nav-link" href="/aboutus.html">About</a>
         </nav>
       </div>
     </header>
@@ -82,11 +82,14 @@
         <div class="col-md-12">
           <br />
           <h1 class="title text-center">Message Feed</h1>
-          <p>Feature Goals: This feed, as described on the My Info page, would 
-            be a gathering place of people's status updates, so to 
-            speak. Time permitting, this page will be built out to 
-            support more interactive and functional social media 
-            like engagemnt.</p>
+
+          <form id="message-form" action="/messages" method="POST" class="hidden">
+            <hr />
+            <h3>Enter a new message:</h3>
+            <textarea name="text" class="form-control" id="message-input" rows="3"></textarea>
+            <input type="submit" value="Submit">
+          </form>
+
           <hr />
           <div id="message-container">Loading...</div>
         </div>
