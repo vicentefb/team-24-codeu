@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.io.BufferedReader;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import com.google.gson.Gson;
 
@@ -56,7 +57,7 @@ public class StoreRouteServlet extends HttpServlet {
 	}
 	String urlEncodedString = sb.toString();
 	URLDecoder dec = new URLDecoder();
-	String decodedString = dec.decode(urlEncodedString);
+	String decodedString = dec.decode(urlEncodedString, "utf-8");
 	String user = "UNKNOWN";
 	String directionsJson = "";
 	for (String s : decodedString.split("&"))  {
