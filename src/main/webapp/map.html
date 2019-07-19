@@ -38,23 +38,30 @@
         <option value="TRANSIT">Transit</option>
       </select>
       <button onclick="calculateAndDisplayRoute()">Calculate Route</button>
-      <div id="bottom-right-panel"></div>
-      <!--routes displayed-->
-      <div id="top-right-panel">
-        <div id="dashboard-info">
-          <button class="collapsible">Route's Effect On Weekly Stats</button>
-          <!--TOFIX: These stat changes need to be generated via MappingServlet.java/map-loader.js-->
-          <div class="content">
-            <p>My Sustainable Miles: 34.3 -> 29.9<br>My Sustainable Hours: 7.5 -> 7.3<br>My Emissions: 7.312 -> 9.211</p>
-          </div>
-          <button class="collapsible">Current Challenges</button>
-          <!--TOFIX: This data needs to be generated via improvements to the Community feature-->
-          <div class="content">
-            <p>Bike twice as much as you drive (single rider) this week!<br>Challenger: Eva Lynch</p>
+
+      <!-- The flexible grid (content) -->
+      <div class="row">
+        <div class="main">
+            <div id="map" style="height:45vw;"></div>
+        </div>
+        <div class="side">
+          <div id="dashboard-info">
+            <button class="collapsible">Route's Effect On Weekly Stats</button>
+            <div class="content">
+              <p>My Sustainable Miles: 34.3 -> 29.9<br>My Sustainable Hours: 7.5 -> 7.3<br>My Emissions: 7.312 -> 9.211</p>
+            </div>
+            <button class="collapsible">Current Challenges</button>
+            <div class="content">
+              <p>Bike twice as much as you drive (single rider) this week!<br>Challenger: Eva Lynch</p>
+            </div>
+            <div id="bottom-right-panel"></div>
+            <div id="add-button">
+              <button>Add Route to Dashboard</button>
+            </div>
           </div>
         </div>
       </div>
-      <div id="map" style="height:45vw;"></div>
+
     </main>
   </div>
 </body>

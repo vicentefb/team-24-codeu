@@ -4,11 +4,11 @@
     height: 100%;
 }
 /* Optional: Makes the sample page fill the window. */
-/*html, body {
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}*/
+}
 
 #floating-panel {
     position: absolute;
@@ -29,10 +29,10 @@
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
-    height: 400px;
-    float: right;
-    width: 390px;
+    height: 600px;
     overflow: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #bottom-right-panel select, #bottom-right-panel input {
@@ -47,28 +47,6 @@
     font-size: 12px;
 }
 
-/* the CSS for displaying the panel that contains the collapsibles */
-#top-right-panel {
-    font-family: 'Roboto','sans-serif';
-    line-height: 30px;
-    padding-left: 10px;
-    height: 100%;
-    float: right;
-    width: 390px;
-    overflow: auto;
-}
-
-#top-right-panel select, #top-right-panel input {
-    font-size: 15px;
-}
-
-#top-right-panel select {
-    width: 100%;
-}
-
-#top-right-panel i {
-    font-size: 12px;
-}
 
 /* so the dashboard effect info is only displayed after a route has been requested 
 via clicking the calc route button */
@@ -117,10 +95,11 @@ via clicking the calc route button */
     content: "\2212";
 }
   
-/* map styling */
+/* map styling -- No longer needed because of flex layout
 #map {
     margin-right: 400px;
-}
+} */
+
 #floating-panel {
     background: #fff;
     padding: 5px;
@@ -129,4 +108,45 @@ via clicking the calc route button */
     border: 1px solid #ccc;
     box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
     display: none;
+}
+
+/* new additions to make the page flexible to page resizing */
+/* this also cleans up the page formatting */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Column container */
+.row {  
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+    flex: 30%;
+    background-color: white;
+    padding: 20px;
+}
+
+/* Main column */
+.main {
+    flex: 70%;
+    background-color: white;
+    padding: 20px;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, 
+make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+    .row {   
+        flex-direction: column;
+    }
+}
+
+#add-button {
+    width: 250px;
+    margin: 0 auto;
 }
