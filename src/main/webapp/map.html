@@ -27,15 +27,18 @@
       <!--user input fields-->
       <label for="start">Start: </label>
       <input class="form-control" id="start" type="text" placeholder="Search...">
+      <label for="waypoint1">Waypoint 1: </label>
+      <input class="form-control" id="waypoint1" type="text" placeholder="Search...">
+      <label for="waypoint2">Waypoint 2: </label>
+      <input class="form-control" id="waypoint2" type="text" placeholder="Search...">
       <label for="start">End: </label>
       <input class="form-control" id="end" type="text" placeholder="Search...">
       <!--<input type="submit" value="Calculate Route" onclick="calculateAndDisplayRoute()" /> -->
-      <b>Mode of Travel: </b>
+      <b>Preferred Mode of Travel: </b>
       <select id="mode">
         <option value="DRIVING">Driving</option>
         <option value="WALKING">Walking</option>
         <option value="BICYCLING">Bicycling</option>
-        <option value="TRANSIT">Transit</option>
       </select>
       <button onclick="calculateAndDisplayRoute()">Calculate Route</button>
 

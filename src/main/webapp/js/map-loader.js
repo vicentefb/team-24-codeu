@@ -25,16 +25,16 @@ function initMap() {
             lng: position.coords.longitude
           };
 
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found.');
-          infoWindow.open(map);
+          infowindow.setPosition(pos);
+          infowindow.setContent('Location found.');
+          infowindow.open(map);
           map.setCenter(pos);
         }, function() {
-          handleLocationError(true, infoWindow, map.getCenter());
+          handleLocationError(true, infowindow, map.getCenter());
         });
       } else {
         // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
+        handleLocationError(false, infowindow, map.getCenter());
       }
     var startInput = document.getElementById('start');
     var startAutocomplete = new google.maps.places.Autocomplete(startInput);
@@ -48,6 +48,32 @@ function initMap() {
 
       map.setCenter(place.geometry.location);
     });
+
+    var waypoint1 = document.getElementById('waypoint1');
+    var w1Autocomplete = new google.maps.places.Autocomplete(waypoint1);
+
+    w1Autocomplete.addListener('place_changed', function () {
+          var place = w1Autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Select an option.");
+            return;
+          }
+
+          map.setCenter(place.geometry.location);
+        });
+
+     var waypoint2 = document.getElementById('waypoint2');
+     var w2Autocomplete = new google.maps.places.Autocomplete(waypoint2);
+
+     w2Autocomplete.addListener('place_changed', function () {
+           var place = w2Autocomplete.getPlace();
+           if (!place.geometry) {
+             window.alert("Select an option.");
+             return;
+           }
+
+           map.setCenter(place.geometry.location);
+         });
 
     var endInput = document.getElementById('end');
     var endAutocomplete = new google.maps.places.Autocomplete(endInput);
@@ -69,34 +95,72 @@ function calcAndDisplayStatEffect(id, visibility) {
 }
 
 function calculateAndDisplayRoute() {
+  var waypoint1 = document.getElementById('waypoint1').value;
+  var waypoint2 = document.getElementById('waypoint2').value;
   var waypts = [{
-    location: "Lakewood Park, Lakechime Drive, Sunnyvale, California, EE. UU.",
+    location: waypoint1,
     stopover: true
-  }, {
-    location: "814 Ahwanee Ave, Sunnyvale, CA 94085, EE. UU.",
-    stopover: true
-  }, {
-     location: "1246 Birchwood Dr Sunnyvale, CA 94089",
-     stopover: true
-   }];
+  }];
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
   var selectedMode = document.getElementById('mode').value;
-  directionsService.route({
-    origin: "Santa Clara Marriott, Mission College Boulevard, Santa Clara, California, EE. UU.",
-    destination: "Google Building MP3, 1170 Bordeaux Dr, Sunnyvale, CA 94089, EE. UU.",
-    waypoints: waypts,
-    optimizeWaypoints: true,
-    travelMode: google.maps.TravelMode[selectedMode]
-  }, function(response, status) {
-    if (status === google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
-      calcAndDisplayStatEffect("dashboard-info", "inline"); 
-      var route = response.routes[0];
-      renderDirectionsPolylines(response, map); 
-    } else {
-      window.alert('Directions request failed due to ' + status);
-    }
-  });
-  google.maps.event.addDomListener(window, "load", initMap);
+  if(waypoint1 === "" && waypoint2 === ""){
+    directionsService.route({
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode[selectedMode]
+      }, function(response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+          calcAndDisplayStatEffect("dashboard-info", "inline");
+          var route = response.routes[0];
+          renderDirectionsPolylines(response, map);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+      google.maps.event.addDomListener(window, "load", initMap);
+  }
+  else if(waypoint2 === "" && waypoint1 !== ""){
+    directionsService.route({
+        origin: start,
+        destination: end,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: google.maps.TravelMode[selectedMode]
+      }, function(response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+          calcAndDisplayStatEffect("dashboard-info", "inline");
+          var route = response.routes[0];
+          renderDirectionsPolylines(response, map);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+      google.maps.event.addDomListener(window, "load", initMap);
+  }
+  else{
+  var temp = {location: waypoint2, stopover: true};
+  waypts.push(temp);
+    directionsService.route({
+        origin: start,
+        destination: end,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: google.maps.TravelMode[selectedMode]
+      }, function(response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+          calcAndDisplayStatEffect("dashboard-info", "inline");
+          var route = response.routes[0];
+          renderDirectionsPolylines(response, map);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+      google.maps.event.addDomListener(window, "load", initMap);
+  }
 
 }
 
@@ -142,7 +206,7 @@ function renderDirectionsPolylines(response) {
       var stepPolyline = new google.maps.Polyline(polylineOptions);
       var color;
       stepPolyline.setOptions({
-        strokeColor: rainbow(legs.length, i)
+        strokeColor: rainbow(legs.length, i+1)
       })
       for (k = 0; k < nextSegment.length; k++) {
         stepPolyline.getPath().push(nextSegment[k]);
