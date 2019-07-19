@@ -66,7 +66,7 @@ public class StoreRouteServlet extends HttpServlet {
 		for (int i = 1; i < parts.length; i++) value += parts[i];
 
 		if (key.equals("user"))  {
-			user = value;
+			user = value.replace("\n", "");
 		}
 		if (key.equals("directions"))  {
 			directionsJson = value;
@@ -74,8 +74,8 @@ public class StoreRouteServlet extends HttpServlet {
 	}
 	System.out.println(directionsJson);
 	Map<String, ?> directionsResult = helper.jsonStringToMap(directionsJson);
-	List<Route> routeList = rfinder.directionsResultToRouteList(directionsResult, "null");
-	this.datastore.storeRoute(routeList.get(0));  
+	List<Route> routeList = rfinder.directionsResultToRouteList(directionsResult, user);
+	this.datastore.storeRoute(routeList.get(0));
 	// routeList should only be of size 1 in this situation
     }
 }

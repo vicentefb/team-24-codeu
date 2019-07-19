@@ -59,7 +59,7 @@ public class RouteFinderServlet extends HttpServlet {
       response.getOutputStream().println("ERROR! One address is either null or empty.");
     }
 
-    String key = "AIzaSyDie7L-I-7ytTG6AiByhJefoF5Lp1B3YHs";
+    String key = "YOUR_API_KEY";
     QueryHelper queryHelper = new QueryHelper(key);
     Map directionsResult = queryHelper.mapApiCall(startAddress, endAddress);
     List<Route> routeList = directionsResultToRouteList(directionsResult, user);
@@ -86,11 +86,10 @@ public class RouteFinderServlet extends HttpServlet {
   private Trip stepToTrip(Map step)	{
     LatLong startLocation = locationMapToLatLong((Map) step.get("start_location"));
     LatLong endLocation = locationMapToLatLong((Map) step.get("end_location"));
-    System.out.println("Step travelmode " + step.get("travel_mode").toString());
     return new Trip(startLocation, endLocation,
 	       (String) step.get("travel_mode").toString(), 
-	       (double) ((Map) step.get("distance")).get("value"),
-	       (double) ((Map) step.get("duration")).get("value"),
+	       ((double) ((Map) step.get("distance")).get("value")) / 1000,
+	       ((double) ((Map) step.get("duration")).get("value")) / 1000,
 	       20);  // unsure about departure time right now...
   }
 
