@@ -1,3 +1,5 @@
+/*  new CSS is for styling the "Meet The Team" section! */
+
 html {
     box-sizing: border-box;
 }
@@ -145,7 +147,7 @@ p {
     }
 }
 
-/* testing something */
+/* for user-page.html so the email and About Me input box don't display strangely */
 @media (min-width: 768px) {
     .col-md-12-b {
         -ms-flex: 0 0 100%;
@@ -155,7 +157,7 @@ p {
 }
 
 /*
- * Team images
+ * Team images - not currently in use
  */
 .team-pic1-size {
     width: 36vw;
