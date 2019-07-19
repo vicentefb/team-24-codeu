@@ -1,4 +1,60 @@
+/*  new CSS is for styling the "Meet The Team" section! */
 
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.column {
+    float: left;
+    width: 20%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+@media screen and (max-width: 650px) {
+    .column {
+        width: 100%;
+        display: block;
+    }
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    padding: 16px 16px 0px;
+}
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.bio-title {
+    color: grey;
+}
+
+.button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #0077B5;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #555;
+}
 body, html {
     height: 100%;
     width: 100%;
@@ -19,6 +75,7 @@ p {
     text-align: center;
     font-weight: bold;
     font-size: 3.5vw;
+    margin-bottom: .5em;
 }
 
 .sub-title-1 {
@@ -79,8 +136,28 @@ p {
     }
 } 
 
+/* to create margins instead of having text spread across entire screen */
+@media (min-width: 768px) {
+    .col-md-12 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: -webkit-fill-available;
+        margin-left: 12%;
+        margin-right: 12%;
+    }
+}
+
+/* for user-page.html so the email and About Me input box don't display strangely */
+@media (min-width: 768px) {
+    .col-md-12-b {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: -webkit-fill-available;
+    }
+}
+
 /*
- * Team images
+ * Team images - not currently in use
  */
 .team-pic1-size {
     width: 36vw;
