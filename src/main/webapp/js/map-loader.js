@@ -17,7 +17,7 @@ function initMap() {
     }
   });
   directionsDisplay.setMap(map);
-  directionsDisplay.setPanel(document.getElementById('right-panel'));
+  directionsDisplay.setPanel(document.getElementById('bottom-right-panel'));
   if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           var pos = {
@@ -58,13 +58,14 @@ function initMap() {
         window.alert("Select an option.");
         return;
       }
+      map.setCenter(place.geometry.location);
+    });
+}
+
 // add data on how stats would be effected by route 
 // and display after calc route button is clicked
 function calcAndDisplayStatEffect(id, visibility) {
   document.getElementById(id).style.display = visibility;   
-}
-      map.setCenter(place.geometry.location);
-    });
 }
 
 function calculateAndDisplayRoute() {
@@ -88,9 +89,9 @@ function calculateAndDisplayRoute() {
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
-
+      calcAndDisplayStatEffect("dashboard-info", "inline"); 
       var route = response.routes[0];
-      renderDirectionsPolylines(response, map);
+      renderDirectionsPolylines(response, map); 
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -158,6 +159,10 @@ function renderDirectionsPolylines(response) {
     }
   }
   map.fitBounds(bounds);
+
+  // script to make the dashboard stat effect boxes collapsible
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
   for (i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function() {
       this.classList.toggle("active");
