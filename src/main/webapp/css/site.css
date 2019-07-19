@@ -137,6 +137,7 @@ p {
 } 
 
 /* to create margins instead of having text spread across entire screen */
+/*
 @media (min-width: 768px) {
     .col-md-12 {
         -ms-flex: 0 0 100%;
@@ -148,6 +149,7 @@ p {
 }
 
 /* for user-page.html so the email and About Me input box don't display strangely */
+/*
 @media (min-width: 768px) {
     .col-md-12-b {
         -ms-flex: 0 0 100%;
@@ -155,6 +157,7 @@ p {
         max-width: -webkit-fill-available;
     }
 }
+*/
 
 /*
  * Team images - not currently in use
