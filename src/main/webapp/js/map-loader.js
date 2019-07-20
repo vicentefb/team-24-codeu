@@ -2,6 +2,7 @@ var map;
 var infowindow;
 var directionsService;
 var directionsDisplay;
+var directionsResult;
 function initMap() {
   infowindow    = new google.maps.InfoWindow();
   directionsService = new google.maps.DirectionsService;
@@ -112,6 +113,7 @@ function calculateAndDisplayRoute() {
       }, function(response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
           directionsDisplay.setDirections(response);
+          directionsResult = response;
           calcAndDisplayStatEffect("dashboard-info", "inline");
           var route = response.routes[0];
           renderDirectionsPolylines(response, map);
@@ -131,6 +133,7 @@ function calculateAndDisplayRoute() {
       }, function(response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
           directionsDisplay.setDirections(response);
+          directionsResult = response;
           calcAndDisplayStatEffect("dashboard-info", "inline");
           var route = response.routes[0];
           renderDirectionsPolylines(response, map);
@@ -152,6 +155,7 @@ function calculateAndDisplayRoute() {
       }, function(response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
           directionsDisplay.setDirections(response);
+          directionsResult = response;
           calcAndDisplayStatEffect("dashboard-info", "inline");
           var route = response.routes[0];
           renderDirectionsPolylines(response, map);
@@ -239,4 +243,31 @@ function renderDirectionsPolylines(response) {
     });
 
   }
+
 }
+
+/*  //Logic for sending the directionsResult object to StoreRoute servlet.
+const myForm = directionsService;
+myForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const formData = new formData(this);
+    const searchParams = new URLSearchParams();
+
+    for(const pair of formData){
+        searchParams.append(pair[0], pair[1])
+    }
+
+    fetch('login.php',{
+        method:'post',
+        body: searchParams
+    }).then(function(response){
+        return response.text();
+    }).then(function(text){
+        console.log(text);
+    }).catch(function(error){
+        console.error(error);
+    })
+});
+
+*/
