@@ -29,20 +29,34 @@ public class EmissionsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-	String userEmail = request.getRemoteUser();
-	DatastoreHelper helper = new DatastoreHelper(this.datastore);
-	HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
-        double totalKilos = 0;
-        double totalUnsustainableKilos = 0;
-	if (transpToDist.containsKey("DRIVING"))	{
-		totalUnsustainableKilos = transpToDist.get("DRIVING");
-	}
+        
+        //FLAG FOR MOCK DATA, TRUE = MOCK DATA, FALSE = ACTUAL IMPLEMENTATION
+        boolean mock = true;
 
-	for (String key : transpToDist.keySet()) totalKilos += transpToDist.get(key);
-	
+        double totalMiles;
+        double totalUnsustainableMiles;
 
-	double totalMiles = totalKilos / 1.609;
-	double totalUnsustainableMiles = totalUnsustainableKilos / 1.609;
+        if(mock == false) {
+            String userEmail = request.getRemoteUser();
+            DatastoreHelper helper = new DatastoreHelper(this.datastore);
+            HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
+                double totalKilos = 0;
+                double totalUnsustainableKilos = 0;
+            if (transpToDist.containsKey("DRIVING"))	{
+                totalUnsustainableKilos = transpToDist.get("DRIVING");
+            }
+
+            for (String key : transpToDist.keySet()) totalKilos += transpToDist.get(key);
+            
+            totalMiles = totalKilos / 1.609;
+            totalUnsustainableMiles = totalUnsustainableKilos / 1.609;
+        } 
+        
+        else {
+            //MOCK DATA
+            totalMiles = 50.5;
+            totalUnsustainableMiles = 18.1;
+        }
         
         //the user's total unsustainable miles is multiplied by .404 to get amount of carbon in kg
         double actualEmissions = totalUnsustainableMiles * .404;

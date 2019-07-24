@@ -96,30 +96,68 @@ public class MiniStatsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-	String userEmail = request.getRemoteUser();
-
-	DatastoreHelper helper = new DatastoreHelper(this.datastore);
-	HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
         
-        //variables for first donut chart
-        double totalSustainableMiles = getSustainableMiles(transpToDist);
-        double totalSustainableMilesGoal = 50.5;
+        //FLAG FOR MOCK DATA, TRUE = MOCK DATA, FALSE = ACTUAL IMPLEMENTATION
+        boolean mock = true;
 
-	//FIXME: Not able to implement due to DepartureTime not being implemented correctly yet.
-        //variables for second donut chart
-        double totalSustainableHours = 7.5;
-        double totalSustainableHoursGoal = 15.5;
+        double totalSustainableMiles;
+        double totalSustainableMilesGoal;
 
-        //variables for third donut chart
-        String favMode = getMostUsedTransportationMode(transpToDist);
-        double favModeMiles = 0;
-	if (transpToDist.containsKey(favMode))	{
-		transpToDist.get(favMode);
-	}
+        double totalSustainableHours;
+        double totalSustainableHoursGoal;
 
-        //FIXME: Not able to implement due to Challenges not being implemented correctly yet.
-        int totalChallengesWon = 1;
-        int totalChallengesGoal = 5;
+        String favMode;
+        double favModeMiles;
+
+        int totalChallengesWon;
+        int totalChallengesGoal;
+
+        if(mock == false) {
+            String userEmail = request.getRemoteUser();
+
+            DatastoreHelper helper = new DatastoreHelper(this.datastore);
+            HashMap<String, Double> transpToDist = helper.userToSumDistanceTransportationMap(userEmail);
+            
+            //variables for first donut chart
+            totalSustainableMiles = getSustainableMiles(transpToDist);
+            totalSustainableMilesGoal = 50.5;
+
+            //FIXME: Not able to implement due to DepartureTime not being implemented correctly yet.
+            //variables for second donut chart
+            totalSustainableHours = 7.5;
+            totalSustainableHoursGoal = 15.5;
+
+            //variables for third donut chart
+            favMode = getMostUsedTransportationMode(transpToDist);
+            favModeMiles = 0;
+            if (transpToDist.containsKey(favMode))	{
+                transpToDist.get(favMode);
+            }
+
+            //FIXME: Not able to implement due to Challenges not being implemented correctly yet.
+            totalChallengesWon = 1;
+            totalChallengesGoal = 5;
+
+        } 
+        
+        else {
+            //MOCK DATA
+            //variables for first donut chart
+            totalSustainableMiles = 60;
+            totalSustainableMilesGoal = 80;
+
+            //variables for second donut chart
+            totalSustainableHours = 7.5;
+            totalSustainableHoursGoal = 15.5;
+
+            //variables for third donut chart
+            favMode = "Bike";
+            favModeMiles = 16.7;
+
+            //variables for fourth donut chart
+            totalChallengesWon = 1;
+            totalChallengesGoal = 5;
+        }
 
         ArrayList<Object> miniStats = new ArrayList<Object>();
         miniStats.add(new MilesChartData(totalSustainableMiles, totalSustainableMilesGoal));
