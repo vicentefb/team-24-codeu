@@ -59,22 +59,33 @@ public class ModesOfTranspServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-	String userEmail = request.getRemoteUser();
-	System.out.println("userEmail " + userEmail);
 
-	DatastoreHelper helper = new DatastoreHelper(datastore);
-	HashMap<String, Double> totalTransp = helper.userToSumDistanceTransportationMap(userEmail);
+        //FLAG FOR MOCK DATA, TRUE = MOCK DATA, FALSE = ACTUAL IMPLEMENTATION
+        boolean mock = true;
 
         ArrayList<TranspMode> modes = new ArrayList<TranspMode>();
-	for (String key : totalTransp.keySet())  {
-		modes.add(new TranspMode(key, totalTransp.get(key)));
-	}
-        modes.add(new TranspMode("Walk", 14.5));
-        modes.add(new TranspMode("Bike", 16.7));
-        modes.add(new TranspMode("Scooter", 10.45));
-        modes.add(new TranspMode("Rollerblade", 5.27));
-        modes.add(new TranspMode("Car (Single Rider)", 9.1));
-        modes.add(new TranspMode("Car (Carpool)", 13.2));
+
+        if(mock == false) {
+            String userEmail = request.getRemoteUser();
+            System.out.println("userEmail " + userEmail);
+
+            DatastoreHelper helper = new DatastoreHelper(datastore);
+            HashMap<String, Double> totalTransp = helper.userToSumDistanceTransportationMap(userEmail);
+
+            for (String key : totalTransp.keySet())  {
+                modes.add(new TranspMode(key, totalTransp.get(key)));
+            }
+        }
+
+        else {
+            //MOCK DATA
+            modes.add(new TranspMode("Walk", 14.5));
+            modes.add(new TranspMode("Bike", 16.7));
+            modes.add(new TranspMode("Scooter", 10.33));
+            modes.add(new TranspMode("Rollerblade", 5.27));
+            modes.add(new TranspMode("Car (Single Rider)", 9.1));
+            modes.add(new TranspMode("Car (Carpool)", 13.2));
+        }
 
         ArrayList<String> modes_data = new ArrayList<String>();
 
